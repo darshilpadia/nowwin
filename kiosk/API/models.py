@@ -29,6 +29,19 @@ class DeviceDTL(models.Model):
     StorageClick = models.IntegerField()
     OtherClick = models.IntegerField()
 
+    class Meta:
+        db_table = 'DeviceDTL'
+class DeviceMaster(models.Model):
+    DeviceID = models.AutoField(primary_key=True)
+    DeviceNumber = models.CharField(max_length=20)
+    DeviceAddress = models.CharField(max_length=250)
+    City = models.CharField(max_length=20)
+    State = models.CharField(max_length=20)
+    DeviceMac = models.CharField(max_length=20)
+    isactive =  models.BooleanField(default=True)
+
+    class Meta:
+        db_table = 'DeviceMaster'
 
 
 
