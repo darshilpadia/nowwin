@@ -19,6 +19,18 @@ class ModelMaster(models.Model):
     class Meta:
         db_table = 'ModelMaster'
 
+class DeviceDTL(models.Model):
+    DeviceDTLID = models.AutoField(primary_key=True)
+    DeviceID = models.ForeignKey('DeviceMaster',on_delete=models.CASCADE)
+    ModelID = models.ForeignKey('ModelMaster',on_delete=models.CASCADE)
+    TotalScreenTime = models.CharField(max_length=6)
+    CameraClick = models.IntegerField()
+    RAMClick = models.IntegerField()
+    StorageClick = models.IntegerField()
+    OtherClick = models.IntegerField()
+
+
+
 
 
 
