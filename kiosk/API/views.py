@@ -18,10 +18,11 @@ class Kiosk(ModelViewSet):
     def getmyid(self, request):
         print('--', request.data)
         try:
-            device_obj = DeviceMaster.objecs.get(Devicemac=request.data.get('mac'))
+            device_obj = DeviceMaster.objects.get(Devicemac=request.data.get('mac'))
             data = {'DeviceID': device_obj.DeviceID}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Here is your id', 'data': data}
         except Exception as e:
+            print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
         return Response(content)
@@ -39,7 +40,44 @@ class Kiosk(ModelViewSet):
                 DeviceMac=request.data.get('device_mac'),
 
             )
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added',}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def ins_DeviceDTL(self, request):
+        print('--', request.data)
+        try:
+            ins_obj = DeviceDTL.objects.create(
+                DeviceID=request.data('deviceid'),
+                ModelID=request.data('modelid'),
+                TotalScreenTime=request.data('total_screen_time'),
+                CameraClick=request.data('camera_click'),
+                RAMClick=request.data('ram_click'),
+                StorageClick=request.data('storage_click'),
+                OtherClick=request.data('other_click'),
+
+            )
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def ins_BrandMaster(self, request):
+        print('--', request.data)
+        try:
+            ins_obj = BrandMaster.objects.create(
+                BrandName=request.data.get('brand_name')
+            )
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
