@@ -15,7 +15,6 @@ class ModelMaster(models.Model):
     BrandID = models.ForeignKey('BrandMaster',on_delete=models.CASCADE)
     isactive = models.BooleanField(default=True)
 
-
     class Meta:
         db_table = 'ModelMaster'
 
@@ -46,6 +45,43 @@ class DeviceDTL(models.Model):
 
     class Meta:
         db_table = 'DeviceDTL'
+
+class ModelDTL(models.Model):
+    ModelDTLID = models.AutoField(primary_key=True)
+    ModelID = models.ForeignKey('ModelMaster', on_delete=models.CASCADE)
+    RAM = models.CharField(max_length=2)
+    Storage = models.CharField(max_length=6)
+    price = models.CharField(max_length=10)
+    back_camera1 = models.CharField(max_length=20)
+    back_camera2 = models.CharField(max_length=20)
+    back_camera3 = models.CharField(max_length=20)
+    back_camera4 = models.CharField(max_length=20)
+    back_camera5 = models.CharField(max_length=20)
+    front_camara1 = models.CharField(max_length=20)
+    front_camara2 = models.CharField(max_length=20)
+    front_camara3 = models.CharField(max_length=20)
+    front_camara4 = models.CharField(max_length=20)
+    screen_size = models.CharField(max_length=10)
+    SIM_type = models.CharField(max_length=10)
+    expandable_storage = models.CharField(max_length=10)
+    color1 = models.CharField(max_length=10)
+    color2 = models.CharField(max_length=10)
+    color3 = models.CharField(max_length=10)
+    color4 = models.CharField(max_length=10)
+    color5 = models.CharField(max_length=10)
+    color6 = models.CharField(max_length=10)
+    color7 = models.CharField(max_length=10)
+    processor = models.CharField(max_length=50)
+    osdtl = models.CharField(max_length=30)
+    cpudtl = models.CharField(max_length=30)
+    bdtl = models.CharField(max_length=30)
+    fingerprint = models.CharField(max_length=50)
+    back_flashlight = models.BooleanField()
+    front_flashlight = models.BooleanField()
+
+    class Meta:
+        db_table = 'ModelDTL'
+
 
 
 
