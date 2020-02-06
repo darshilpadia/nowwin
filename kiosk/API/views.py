@@ -83,3 +83,12 @@ class Kiosk(ModelViewSet):
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
         return Response(content)
+
+    # KIOSK
+    @action(method=['POST'], detail=False)
+    def get_VerificationCode(self, request):
+        print('--', request.data)
+        try:
+            pass
+        except Exception as e:
+            print(str(e))
