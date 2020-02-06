@@ -20,6 +20,8 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('api/kiosk/',include('API.urls'))
+
 
 ]
