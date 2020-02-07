@@ -54,7 +54,7 @@ class UserMaster(models.Model):
     FirstName = models.CharField(max_length=10)
     LastName = models.CharField(max_length=15)
     Password = models.CharField(max_length=255)
-    IsActive = models.BooleanField()
+    IsActive = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'UserMaster'
@@ -64,7 +64,7 @@ class UserActiveLogon(models.Model):
     ActiveLogonID = models.AutoField(primary_key=True)
     UserID = models.ForeignKey('UserMaster', on_delete=models.CASCADE)
     Token = models.CharField(max_length=50)
-    IsActive = models.BooleanField()
+    IsActive = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'UserActiveLogon'
