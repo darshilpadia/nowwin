@@ -9,6 +9,32 @@ from .models import *
 
 # Create your views here.
 
+
+class Utils():
+    def VerifyUser(self, userid, token):
+        try:
+            verify_obj = DeviceMaster.objects.get(UserID=userid, token=token)
+            if verify_obj.Isactive:
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(str(e))
+            return False
+
+    def VerifyKiosk(self, kioskid, token):
+        try:
+            verify_obj = DeviceMaster.objects.get(KioskID=kioskid, token=token)
+            if verify_obj.Isactive:
+                return True
+            else:
+                return False
+        except Exception as e:
+            print(str(e))
+            return False
+
+
+
 class Kiosk(ModelViewSet):
     queryset = BrandMaster.objects.all()
     serializer_class = BrandMasterSerializer
@@ -92,3 +118,9 @@ class Kiosk(ModelViewSet):
             pass
         except Exception as e:
             print(str(e))
+
+    
+
+
+
+
