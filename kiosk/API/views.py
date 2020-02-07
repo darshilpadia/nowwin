@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import uuid
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -227,6 +228,11 @@ class Kiosk(ModelViewSet):
                     'front_flashlight': modeldtl_view_obj.front_flashlight}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Model',
                        'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
 
     def update_BrandMaster(self, request):
         print('--', request.data)
@@ -346,7 +352,7 @@ class Kiosk(ModelViewSet):
     def update_Device(self, request):
         print('--', request.data)
         try:
-            device_obj = DeviceMaster.objects.get(DeviceID= request.data.get('DeviceID'))
+            device_obj = DeviceMaster.objects.get(DeviceID=request.data.get('DeviceID'))
             device_obj.DeviceNumber = request.data.get('DeviceNumber')
             device_obj.DeviceAddress = request.data.get('DeviceAddress')
             device_obj.City = request.data.get('City')
@@ -372,6 +378,46 @@ class Kiosk(ModelViewSet):
             user_obj.LastName = request.data.get('LastName')
             user_obj.save()
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Brand Master Update'}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+
+        return Response(content)
+
+    @action(methods=['POST'], details=False)
+    def Login(self, request):
+        print('--', request.data)
+        try:
+            login_obj = UserMaster.objects.get(EmailId=request.data.get('EmailID'),
+                                               Password=request.data.get('Password'), IsActive=True)
+            token = uuid.uuid4().hex
+            ins_log = UserActiveLogon.objects.create(
+                Token=token,
+                UserID=login_obj.UserId
+
+            )
+            data = {'UserID': login_obj.UserId, 'EmailID': login_obj.EmailID, 'FirstName': login_obj.FirstName,
+                    'LastName': login_obj.LastName,
+                    'Password': login_obj.Password, 'IsActive': login_obj.IsActive, 'Token': token}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Login Success', 'data': data}
+
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
+    @action(methods=['POST'], details=False)
+    def Logout(self, request):
+        print('--', request.data)
+        try:
+            ins_log = UserActiveLogon.objects.create(
+                IsActive=False,
+                UserID=request.data.get('UserID')
+            )
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Logout Success'}
+
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
