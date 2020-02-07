@@ -118,6 +118,7 @@ class Kiosk(ModelViewSet):
         except Exception as e:
             print(str(e))
 
+
     # ADMIN SIDE
     @action(methods=['POST'], detail=False)
     def get_BrandView(self, request):
@@ -131,6 +132,7 @@ class Kiosk(ModelViewSet):
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
         return Response(content)
+
 
     # ADMIN SIDE
     @action(methods=['POST'], detail=False)
