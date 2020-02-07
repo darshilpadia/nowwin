@@ -47,6 +47,34 @@ class DeviceDTL(models.Model):
     class Meta:
         db_table = 'DeviceDTL'
 
+class UserMaster(models.Model):
+    UserID = models.AutoField(primary_key=True)
+    EmailID= models.CharField(max_length=30)
+    FirstName=models.CharField(max_length=10)
+    LastName=models.CharField(max_length=15)
+    Password=models.CharField(max_length=255)
+    IsActive=models.BooleanField()
+
+    class Meta:
+        db_table = 'UserMaster'
+
+class UserActiveLogon(models.Model):
+    ActiveLogonID=models.AutoField(primary_key=True)
+    UserID=models.ForeignKey('UserMaster',on_delete=models.CASCADE)
+    Token=models.CharField(max_length=50)
+    IsActive=models.BooleanField()
+
+    class Meta:
+        db_table='UserActiveLogon'
+
+class KioskActiveLogon(models.Model):
+    KioskLogonID=models.AutoField(primary_key=True)
+    DeviceID=models.ForeignKey('DeviceDTL',on_delete=models.CASCADE)
+    Token=models.CharField(max_length=50)
+    IsActive=models.BooleanField()
+
+    class Meta:
+        db_table='KioskActiveLogon'
 
 class ModelDTL(models.Model):
     ModelDTLID = models.AutoField(primary_key=True)
