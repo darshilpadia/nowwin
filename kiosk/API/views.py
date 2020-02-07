@@ -111,7 +111,7 @@ class Kiosk(ModelViewSet):
         return Response(content)
 
     # KIOSK
-    @action(method=['POST'], detail=False)
+    @action(methods=['POST'], detail=False)
     def get_VerificationCode(self, request):
         print('--', request.data)
         try:
@@ -119,7 +119,7 @@ class Kiosk(ModelViewSet):
         except Exception as e:
             print(str(e))
 
-    
+
 
 
 
