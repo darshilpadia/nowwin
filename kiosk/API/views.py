@@ -13,8 +13,8 @@ from .models import *
 class Utils():
     def VerifyUser(self, userid, token):
         try:
-            verify_obj = DeviceMaster.objects.get(UserID=userid, token=token)
-            if verify_obj.Isactive:
+            verify_obj = UserActiveLogon.objects.get(UserID=userid, Token=token)
+            if verify_obj.IsActive:
                 return True
             else:
                 return False
@@ -24,15 +24,14 @@ class Utils():
 
     def VerifyKiosk(self, kioskid, token):
         try:
-            verify_obj = DeviceMaster.objects.get(KioskID=kioskid, token=token)
-            if verify_obj.Isactive:
+            verify_obj = DeviceMaster.objects.get(DeviceID=kioskid, Token=token)
+            if verify_obj.IsActive:
                 return True
             else:
                 return False
         except Exception as e:
             print(str(e))
             return False
-
 
 
 class Kiosk(ModelViewSet):
@@ -111,7 +110,7 @@ class Kiosk(ModelViewSet):
         return Response(content)
 
     # KIOSK
-    @action(method=['POST'], detail=False)
+    @action(methods=['POST'], detail=False)
     def get_VerificationCode(self, request):
         print('--', request.data)
         try:
@@ -119,8 +118,30 @@ class Kiosk(ModelViewSet):
         except Exception as e:
             print(str(e))
 
-    
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def get_BrandView(self, request):
+        print('--', request.data)
+        try:
+            brand_view_obj = BrandMaster.objects.filter()
+            data = {'brindlist': brand_view_obj}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List Of Brand', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
 
-
-
-
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def get_BrandByID(self, request):
+        print('--', request.data)
+        try:
+            brand_view_obj = BrandMaster.objects.get(BrandID=request.data.get('BrandID'))
+            data = {'BrandID': brand_view_obj.BrandID, 'BrandName': brand_view_obj.BrandName}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Brand', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
