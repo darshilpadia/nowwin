@@ -119,6 +119,70 @@ class Kiosk(ModelViewSet):
             print(str(e))
 
 
+    
+    @action(method=['POST'], detail=False)
+    def get_BrandView(self,request):
+        print('--', request.data)
+        try:
+            brand_view_obj= BrandMaster.objects.filter()
+            data={'brand_list', brand_view_obj}
+            content= {'result':'Success','status': status.HTTP_200_OK,'message':'List of Brand','data':data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR, 'message': 'Error in fetching data'}
+
+        return Response(content)
+
+    @action(method=['POST'], detail=False)
+    def get_ModelView(self, request):
+        print('--', request.data)
+        try:
+            model_view_obj = ModelMaster.ojects.filter(isactive=True)
+            data={'model_list', model_view_obj}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+
+        return Response(content)
+
+    @action(method=['POST'], detail=False)
+    def get_UserView(self, request):
+        print('--', request.data)
+        try:
+            user_view_obj = UserMaster.objects.filter(IsActive=True)
+            data={'user_list', user_view_obj}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                   'message': 'Error in fetching data'}
+
+        return Response(content)
+
+    @action(method=['POST'], detail=False)
+    def get_DeviceView(self, request):
+        print('--', request.data)
+        try:
+            device_view_obj= DeviceMaster.objects.filter(isactive=True)
+            data={'device_list',device_view_obj}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of device', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                   'message': 'Error in fetching data'}
+        return Response(content)
+
+
+
+
+
+
+
+
+
+
     # ADMIN SIDE
     @action(methods=['POST'], detail=False)
     def get_BrandView(self, request):
