@@ -40,12 +40,12 @@
             {% csrf_token %}
             <div class="c-field u-mb-small">
                 <label class="c-field__label" for="input1">Log in with your e-mail address</label>
-                <input class="c-input" type="email" id="input1" placeholder="clark@dashboard.com">
+                <input class="c-input" type="email" id="input1" placeholder="clark@dashboard.com" name="EmailID">
             </div>
 
             <div class="c-field u-mb-small">
                 <label class="c-field__label" for="input2">Password</label>
-                <input class="c-input" type="password" id="input2" placeholder="Numbers, Letters...">
+                <input class="c-input" type="password" id="input2" placeholder="Numbers, Letters..." name="Password">
             </div>
 
             <button class="c-btn c-btn--info c-btn--fullwidth" type="submit">Sign in to Dashboard</button>
