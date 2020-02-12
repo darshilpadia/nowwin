@@ -119,7 +119,7 @@ class Kiosk(ModelViewSet):
         except Exception as e:
             print(str(e))
 
-    @action(method=['POST'], detail=False)
+    @action(methods=['POST'], detail=False)
     def get_BrandView(self, request):
         print('--', request.data)
         try:
@@ -133,7 +133,7 @@ class Kiosk(ModelViewSet):
 
         return Response(content)
 
-    @action(method=['POST'], detail=False)
+    @action(methods=['POST'], detail=False)
     def get_ModelView(self, request):
         print('--', request.data)
         try:
@@ -147,7 +147,7 @@ class Kiosk(ModelViewSet):
 
         return Response(content)
 
-    @action(method=['POST'], detail=False)
+    @action(methods=['POST'], detail=False)
     def get_UserView(self, request):
         print('--', request.data)
         try:
@@ -161,7 +161,7 @@ class Kiosk(ModelViewSet):
 
         return Response(content)
 
-    @action(method=['POST'], detail=False)
+    @action(methods=['POST'], detail=False)
     def get_DeviceView(self, request):
         print('--', request.data)
         try:
@@ -385,7 +385,7 @@ class Kiosk(ModelViewSet):
 
         return Response(content)
 
-    @action(methods=['POST'], details=False)
+    @action(methods=['POST'], detail=False)
     def Login(self, request):
         print('--', request.data)
         try:
@@ -408,7 +408,7 @@ class Kiosk(ModelViewSet):
                        'message': 'Error in fetching data'}
         return Response(content)
 
-    @action(methods=['POST'], details=False)
+    @action(methods=['POST'], detail=False)
     def Logout(self, request):
         print('--', request.data)
         try:

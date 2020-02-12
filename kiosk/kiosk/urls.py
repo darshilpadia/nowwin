@@ -16,12 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from .settings import BASE_DIR, TEMPLATE_DIR, STATICFILES_DIRS
+from UI.views import *
 
-
+print('bd', BASE_DIR)
+print('td', TEMPLATE_DIR)
+print('sd', STATICFILES_DIRS)
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('api/kiosk/',include('API.urls'))
-
+    path('api/kiosk/', include('API.urls')),
+    url(r'^login$', login, name='login')
 
 ]
+urlpatterns += staticfiles_urlpatterns()
