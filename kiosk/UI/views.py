@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from API.views import *
 
 
 # Create your views here.
@@ -6,10 +7,17 @@ def login(request):
     print('------', request.POST)
     print('------', request)
     if request.method == "POST":
-        data = {'EmailID': request.POST.get('EmailID'), 'Password': request.POST.get('Password')}
-        print(data)
+        request.data = {'EmailID': request.POST.get('EmailID'), 'Password': request.POST.get('Password')}
+        print(request.data)
+        r = Kiosk()
+        re = r.Login(request)
+        if re.data.get('result') == "Success":
+            response = redirect('projects.html', permanent=True)
+        return response
+
     else:
         return render(request, 'login.html', {})
+
 
 def brandmaster(request):
     print('------', request.POST)
@@ -19,6 +27,7 @@ def brandmaster(request):
         print(data)
     else:
         return render(request, 'brandmaster.html', {})
+
 
 def brandview(request):
     print('------', request.POST)
@@ -47,11 +56,16 @@ def deviceview(request):
     else:
         return render(request, 'deviceview.html', {})
 
-def userview(request):
+
+
+def forgotpassword(request):
+
     print('------', request.POST)
     print('------', request)
     if request.method == "POST":
         data = {'EmailID': request.POST.get('EmailID'), 'Password': request.POST.get('Password')}
         print(data)
     else:
-        return render(request, 'userview.html', {})
+
+        return render(request, 'forgot-password.html', {})
+

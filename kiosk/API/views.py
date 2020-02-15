@@ -433,17 +433,18 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def Login(self, request):
+        print('--',request)
         print('--', request.data)
         try:
-            login_obj = UserMaster.objects.get(EmailId=request.data.get('EmailID'),
+            login_obj = UserMaster.objects.get(EmailID=request.data.get('EmailID'),
                                                Password=request.data.get('Password'), IsActive=True)
             token = uuid.uuid4().hex
             ins_log = UserActiveLogon.objects.create(
                 Token=token,
-                UserID=login_obj.UserId
+                UserID_id=login_obj.UserID
 
             )
-            data = {'UserID': login_obj.UserId, 'EmailID': login_obj.EmailID, 'FirstName': login_obj.FirstName,
+            data = {'UserID': login_obj.UserID, 'EmailID': login_obj.EmailID, 'FirstName': login_obj.FirstName,
                     'LastName': login_obj.LastName,
                     'Password': login_obj.Password, 'IsActive': login_obj.IsActive, 'Token': token}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Login Success', 'data': data}
