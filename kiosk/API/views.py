@@ -44,6 +44,21 @@ class Kiosk(ModelViewSet):
     def getmyid(self, request):
         print('--', request.data)
         try:
+            device_obj = DeviceMaster.objects.get(DeviceMac=request.data.get('mac'))
+            data = {'DeviceID': device_obj.DeviceID}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Here is your id', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
+        # KIOSK
+
+    @action(methods=['GET'], detail=False)
+    def getmyid1(self, request):
+        print('--', request.data)
+        try:
             device_obj = DeviceMaster.objects.get(Devicemac=request.data.get('mac'))
             data = {'DeviceID': device_obj.DeviceID}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Here is your id', 'data': data}
@@ -118,6 +133,8 @@ class Kiosk(ModelViewSet):
             pass
         except Exception as e:
             print(str(e))
+
+
 
     @action(methods=['POST'], detail=False)
     def get_BrandView(self, request):
