@@ -29,7 +29,7 @@ urlpatterns = [
     path('api/kiosk/', include('API.urls')),
     url(r'^login$', login, name='login'),
     url(r'^brandmaster$', brandmaster, name='brandmaster'),
-
+    url(r'^modelmaster$', modelmaster, name='modelmaster'),
 
 ]
 urlpatterns += staticfiles_urlpatterns()

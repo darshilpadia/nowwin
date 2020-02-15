@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'kiosk.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'kiosk',
-        # 'USER': 'kiosk1',
-        # 'PASSWORD': '1234',
-        # 'HOST': 'localhost',
-        # 'PORT':'3306',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'kiosk',
+        'USER': 'kiosk1',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT':'3306',
     }
 }
 
