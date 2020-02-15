@@ -95,6 +95,52 @@ class Kiosk(ModelViewSet):
                        'message': 'Error in fetching data'}
         return Response(content)
 
+        # ADMIN SIDE
+
+    @action(methods=['POST'], detail=False)
+    def ins_ModelDTL(self, request):
+        print('--', request.data)
+        try:
+            ins_obj = ModelDTL.objects.create(
+                ModelID=request.data('modelid'),
+                RAM=request.data('ram', ''),
+                Storage=request.data('storage', ''),
+                price=request.data('price', 0),
+                back_camera1=request.data('back_camera1', ''),
+                back_camera2=request.data('back_camera2', ''),
+                back_camera3=request.data('back_camera3', ''),
+                back_camera4=request.data('back_camera4', ''),
+                back_camera5=request.data('back_camera5', ''),
+                front_camara1=request.data('front_camara1', ''),
+                front_camara2=request.data('front_camara2', ''),
+                front_camara3=request.data('front_camara3', ''),
+                front_camara4=request.data('front_camara4', ''),
+                screen_size=request.data('screen_size', ''),
+                SIM_type=request.data('SIM_type', ''),
+                expandable_storage=request.data('expandable_storage', ''),
+                color1=request.data('color1', ''),
+                color2=request.data('color2', ''),
+                color3=request.data('color3', ''),
+                color4=request.data('color4', ''),
+                color5=request.data('color5', ''),
+                color6=request.data('color6', ''),
+                color7=request.data('color7', ''),
+                processor=request.data('processor', ''),
+                osdtl=request.data('osdtl', ''),
+                cpudtl=request.data('cpudtl', ''),
+                bdtl=request.data('bdtl', ''),
+                fingerprint=request.data('fingerprint', ''),
+                back_flashlight=request.data('back_flashlight', ''),
+                front_flashlight=request.data('front_flashlight', '')
+
+            )
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
     # ADMIN SIDE
     @action(methods=['POST'], detail=False)
     def ins_BrandMaster(self, request):

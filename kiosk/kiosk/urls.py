@@ -29,6 +29,10 @@ urlpatterns = [
     path('api/kiosk/', include('API.urls')),
     url(r'^login$', login, name='login'),
     url(r'^brandmaster$', brandmaster, name='brandmaster'),
+    url(r'^brandview$', brandview, name='brandview'),
+    url(r'^modelview$', modelview, name='modelview'),
+    url(r'^deviceview$', deviceview, name='deviceview'),
+    url(r'^userview$', userview, name='userview'),
 
 
 ]
