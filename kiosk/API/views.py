@@ -118,6 +118,7 @@ class Kiosk(ModelViewSet):
         try:
             ins_obj = ModelDTL.objects.create(
                 ModelID=request.data('modelid'),
+                ModelName=request.data('modelname', ''),
                 RAM=request.data('ram', ''),
                 Storage=request.data('storage', ''),
                 price=request.data('price', 0),
@@ -171,6 +172,21 @@ class Kiosk(ModelViewSet):
                        'message': 'Error in fetching data'}
         return Response(content)
 
+        # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def ins_ModelMaster(self, request):
+        print('--', request.data)
+        try:
+            ins_obj = BrandMaster.objects.create(
+                ModelName=request.data.get('modelname')
+            )
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
     # KIOSK
     @action(methods=['POST'], detail=False)
     def get_VerificationCode(self, request):
@@ -179,8 +195,6 @@ class Kiosk(ModelViewSet):
             pass
         except Exception as e:
             print(str(e))
-
-
 
     @action(methods=['POST'], detail=False)
     def get_BrandView(self, request):
@@ -439,7 +453,7 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def Login(self, request):
-        print('--',request)
+        print('--', request)
         print('--', request.data)
         try:
             login_obj = UserMaster.objects.get(EmailID=request.data.get('EmailID'),
