@@ -184,11 +184,12 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def get_BrandView(self, request):
-        print('--', request.data)
+        print('**************************************call bc')
         try:
             brand_view_obj = BrandMaster.objects.filter()
             data = {'brand_list', brand_view_obj}
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand', 'data': data}
+            print('.....call',data)
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand', 'data': brand_view_obj}
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -237,19 +238,7 @@ class Kiosk(ModelViewSet):
                        'message': 'Error in fetching data'}
         return Response(content)
 
-    # ADMIN SIDE
-    @action(methods=['POST'], detail=False)
-    def get_BrandView(self, request):
-        print('--', request.data)
-        try:
-            brand_view_obj = BrandMaster.objects.filter()
-            data = {'brindlist': brand_view_obj}
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List Of Brand', 'data': data}
-        except Exception as e:
-            print(str(e))
-            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                       'message': 'Error in fetching data'}
-        return Response(content)
+
 
     # ADMIN SIDE
     @action(methods=['POST'], detail=False)
