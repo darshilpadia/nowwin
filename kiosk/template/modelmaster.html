@@ -19,6 +19,7 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/main.min3661.css' %}">
+   <link rel="stylesheet" href="{% static 'css/colorpicker.css' %}">
 </head>
 <body class="o-page">
 <!--[if lte IE 9]>
@@ -264,7 +265,7 @@
             <span class="c-sidebar-toggle__bar"></span>
         </button>
 
-        <h2 class="c-navbar__title u-mr-auto">Brandmaster</h2>
+        <h2 class="c-navbar__title u-mr-auto">Modelaster</h2>
 
     </header>
 
@@ -274,12 +275,143 @@
             <div class="col-xl-9">
 
                 <div class="c-invoice">
-                    <form class="c-card__body" method="post" action="{% url 'brandmaster' %}">
-                        {% csrf_token %}
+                    <form class="c-card__body" method="POST" action="{% url 'modelmaster' %}">
                         <div class="c-field u-mb-small">
-                            <label class="c-field__label" for="input1">Brand Name</label>
-                            <input class="c-input" type="text" id="brandname" placeholder="" name="brandname" required>
+                            <label class="c-field__label">Model Name</label>
+                            <input class="c-input" type="text" id="modelname" placeholder="" name="modelname" required>
                         </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >RAM</label>
+                            <input class="c-input" type="text" id="ram" placeholder="" name="ram" required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">Storage</label>
+                            <input class="c-input" type="text" id="storage" placeholder="" name="storage" required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >price</label>
+                            <input class="c-input" type="text" id="price" placeholder="" name="price" required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >back_camera1</label>
+                            <input class="c-input" type="text" id="back_camera1" placeholder="" name="back_camera1"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >back_camera2</label>
+                            <input class="c-input" type="text" id="back_camera2" placeholder="" name="back_camera2"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">back_camera3</label>
+                            <input class="c-input" type="text" id="back_camera3" placeholder="" name="back_camera3"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">back_camera4</label>
+                            <input class="c-input" type="text" id="back_camera4" placeholder="" name="back_camera4"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">back_camera5</label>
+                            <input class="c-input" type="text" id="back_camera5" placeholder="" name="back_camera5"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">front_camera1</label>
+                            <input class="c-input" type="text" id="front_camera1" placeholder="" name="front_camera1"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">front_camera2</label>
+                            <input class="c-input" type="text" id="front_camera2" placeholder="" name="front_camera2"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >front_camera3</label>
+                            <input class="c-input" type="text" id="front_camera3" placeholder="" name="front_camera3"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >front_camera4</label>
+                            <input class="c-input" type="text" id="front_camera4" placeholder="" name="front_camera4"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >screen size</label>
+                            <input class="c-input" type="text" id="screen_size" placeholder="" name="screen_size"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">SIM type</label>
+                            <input class="c-input" type="text" id="sim_type" placeholder="" name="sim_type"
+                                   required>
+                        </div>
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">Expandable Storage</label>
+                            <input class="c-input" type="text" id="expandable_storage" placeholder=""
+                                   name="expandable_storage"
+                                   required>
+                        </div>
+
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">Processor</label>
+                            <input class="c-input" type="text" id="processor" placeholder=""
+                                   name="processor"
+                                   required>
+                        </div>
+
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >OS_Details</label>
+                            <input class="c-input" type="text" id="os_details" placeholder=""
+                                   name="os_details"
+                                   required>
+                        </div>
+
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label" >CPU_Details</label>
+                            <input class="c-input" type="text" id="cpu_details" placeholder=""
+                                   name="cpu_details"
+                                   required>
+                        </div>
+
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">Battery_Details</label>
+                            <input class="c-input" type="text" id="battery_details" placeholder=""
+                                   name="battery_details"
+                                   required>
+                        </div>
+
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">Fingerprint</label>
+                            <input  type="radio" id="fingerprint1" placeholder=""
+                                   name="fingerprint"
+                                   >Yes
+                            <input type="radio" id="fingerprint2" placeholder=""
+                                   name="fingerprint"
+                                   >No
+                        </div>
+
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">Back_Flash</label>
+                            <input  type="radio" id="backflash1" placeholder=""
+                                   name="backflash"
+                                   >Yes
+                            <input type="radio" id="backflash2" placeholder=""
+                                   name="backflash"
+                                   >No
+                        </div>
+
+                        <div class="c-field u-mb-small">
+                            <label class="c-field__label">Front_Flash</label>
+                            <input  type="radio" id="frontflash1" placeholder=""
+                                   name="frontflash"
+                                   >Yes
+                            <input type="radio" id="frontflash2" placeholder=""
+                                   name="frontflash"
+                                   >No
+                        </div>
+
 
                         <button class="c-btn c-btn--info c-btn--fullwidth" type="submit">Submit</button>
                     </form>
@@ -292,11 +424,25 @@
 </main><!-- // .o-page__content -->
 
 <!-- Main javascsript -->
-<script src="{% static 'js/main.min3661.js' %}"></script>
+<script src="{% static 'js/main.min3661.js' %}">
+</script>
+
+<script src="{% static 'js/colorpicker.js' %}">
+
+</script>
 
 <script>
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
             ga('create','UA-88739867-2','auto');ga('send','pageview')
+
+
+
+
+
+
+
+
+
 
 </script>
 <script src="../../www.google-analytics.com/analytics.js" async defer></script>

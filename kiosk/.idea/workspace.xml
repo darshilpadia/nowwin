@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f7e7763c-6a26-4990-808c-518a6bff2f76" name="Default" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
+    <list default="true" id="f7e7763c-6a26-4990-808c-518a6bff2f76" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/css/mycss.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kiosk.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kiosk.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kiosk/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/kiosk/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kiosk/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/kiosk/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template/brandmaster.html" beforeDir="false" afterPath="$PROJECT_DIR$/template/brandmaster.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
@@ -159,9 +169,22 @@
         </subPane>
       </pane>
     </panes>
+=======
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1XpbSQjFnfSSafCCyGi9vUbbqhV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+>>>>>>> 2de5cefdc5c74f8b7496412dbe728a74d636b514
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+<<<<<<< HEAD
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -179,6 +202,9 @@
         </RuleState>
       </list>
     </option>
+=======
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+>>>>>>> 2de5cefdc5c74f8b7496412dbe728a74d636b514
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -193,6 +219,7 @@
     </task>
     <servers />
   </component>
+<<<<<<< HEAD
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="776" extended-state="6" />
     <layout>
@@ -614,5 +641,12 @@
         </state>
       </provider>
     </entry>
+=======
+  <component name="WindowStateProjectService">
+    <state x="75" y="0" key="SettingsEditor" timestamp="1581747350251">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="75" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1581747350251" />
+>>>>>>> 2de5cefdc5c74f8b7496412dbe728a74d636b514
   </component>
 </project>
