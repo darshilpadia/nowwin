@@ -39,6 +39,9 @@ class Kiosk(ModelViewSet):
     queryset = BrandMaster.objects.all()
     serializer_class = BrandMasterSerializer
 
+    # queryset1 = ModelMaster.objects.all()
+    # serializer_class1 = ModelMasterSerializer
+
     # KIOSK
     @action(methods=['POST'], detail=False)
     def getmyid(self, request):
@@ -180,8 +183,6 @@ class Kiosk(ModelViewSet):
         except Exception as e:
             print(str(e))
 
-
-
     @action(methods=['POST'], detail=False)
     def get_BrandView(self, request):
         print('--', request.data)
@@ -200,9 +201,38 @@ class Kiosk(ModelViewSet):
     def get_ModelView(self, request):
         print('--', request.data)
         try:
-            model_view_obj = ModelMaster.ojects.filter(isactive=True)
+            model_view_obj = ModelMaster.objects.filter(isactive=True)
             data = {'model_list', model_view_obj}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+
+        return Response(content)
+
+    @action(methods=['POST'], detail=False)
+    def get_UserView(self, request):
+        print('--', request.data)
+        try:
+            user_view_obj = UserMaster.objects.filter(IsActive=True)
+            data = {'user_list', user_view_obj}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+
+        return Response(content)
+
+    @action(methods=['POST'], detail=False)
+    def get_ModelID_By_DeviceID(self, request):
+        print('--', request.data)
+        try:
+            user_view_obj = Mo.objects.filter(DeviceID=request.data.get('DeviceID'))
+            data = {'user_list', user_view_obj}
+            print(data)
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -450,7 +480,7 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def Login(self, request):
-        print('--',request)
+        print('--', request)
         print('--', request.data)
         try:
             login_obj = UserMaster.objects.get(EmailID=request.data.get('EmailID'),
