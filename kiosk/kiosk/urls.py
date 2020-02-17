@@ -20,6 +20,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .settings import BASE_DIR, TEMPLATE_DIR, STATICFILES_DIRS
 from UI.views import *
 
+
 print('bd', BASE_DIR)
 print('td', TEMPLATE_DIR)
 print('sd', STATICFILES_DIRS)
@@ -36,7 +37,7 @@ urlpatterns = [
     url(r'^brandview$', brandview, name='brandview'),
     url(r'^modelview$', modelview, name='modelview'),
     url(r'^deviceview$', deviceview, name='deviceview'),
-    url(r'^userview$', userview, name='userview'),
+    # url(r'^userview$', userview, name='userview'),
 
     url(r'^forgotpassword$',forgotpassword,name='forgotpassword')
 
