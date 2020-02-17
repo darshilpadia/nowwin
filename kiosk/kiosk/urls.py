@@ -20,6 +20,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .settings import BASE_DIR, TEMPLATE_DIR, STATICFILES_DIRS
 from UI.views import *
 
+
 print('bd', BASE_DIR)
 print('td', TEMPLATE_DIR)
 print('sd', STATICFILES_DIRS)
