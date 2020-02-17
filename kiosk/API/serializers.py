@@ -4,5 +4,10 @@ from .models import *
 
 class BrandMasterSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BrandMaster
+        model = BrandMaster , ModelMaster
         feilds = '__all__'
+
+# class ModelMasterSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = ModelMaster
+#         feilds = '__all__'
