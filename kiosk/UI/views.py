@@ -73,17 +73,22 @@ def modelmaster(request):
 
 def brandview(request):
     print('------', request.POST)
-    print('------', request)
-    if request.method == "POST":
-        data = {'EmailID': request.POST.get('EmailID'), 'Password': request.POST.get('Password')}
+    print('------********(((((((((((', request)
+    r = Kiosk()
+    print('line 52 ui view')
+    b = r.get_BrandView(request)
+    print('line 53 ui view')
+    if b.data.get('result') == 'Success':
+        data = b.data.get('data')
         print(data)
+        return render(request, 'brandview.html', {'d': data})
     else:
         return render(request, 'brandview.html', {})
 
 
 def modelview(request):
     print('------', request.POST)
-    print('------', request)
+    print('------**************', request)
     if request.method == "POST":
         data = {'EmailID': request.POST.get('EmailID'), 'Password': request.POST.get('Password')}
         print(data)
