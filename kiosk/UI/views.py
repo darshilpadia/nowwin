@@ -34,6 +34,25 @@ def brandmaster(request):
         return render(request, 'brandmaster.html', {})
 
 
+def devicemaster(request):
+    print('------', request.POST)
+    print('------', request)
+    if request.method == "POST":
+        request.data = {'devicenumber': request.POST.get('devicenumber'), 'devicemac': request.POST.get('devicemac'),
+                        'deviceaddress': request.POST.get('deviceaddress'),
+                        'city': request.POST.get('city'),
+                        'state': request.POST.get('state'),
+                        }
+        r = Kiosk()
+        res = r.ins_DeviceMaster(request)
+        print(res)
+        if res.data.get('result') == 'Success':
+            response = redirect('deviceview.html', permanent=True)
+        return response
+    else:
+        return render(request, 'devicemaster.html', {})
+
+
 def modelmaster(request):
     print('------model masert ----', request.POST)
     print('------', request)
