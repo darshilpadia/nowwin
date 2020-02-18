@@ -216,11 +216,11 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def get_ModelView(self, request):
-        print('--', request.data)
+        # print('--', request.data)
         try:
             model_view_obj = ModelMaster.objects.filter(isactive=True)
             data = {'model_list', model_view_obj}
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': model_view_obj}
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
