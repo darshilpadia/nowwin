@@ -61,12 +61,6 @@ class Kiosk(ModelViewSet):
     # queryset1 = ModelMaster.objects.all()
     # serializer_class1 = ModelMasterSerializer
 
-
-
-
-
-
-
     # KIOSK
     @action(methods=['POST'], detail=False)
     def getmyid(self, request):
@@ -256,7 +250,8 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             model_view_obj = ModelMaster.objects.filter(isactive=True)
-            modeldtl_view_obj = ModelDTL.objects.get(ModelID=model_view_obj.ModelID)
+            modeldtl_view_obj = ModelDTL.objects.get(ModelID_id=model_view_obj.ModelID)
+
             data = {'ModelID': model_view_obj.ModelID, 'ModelName': model_view_obj.ModelName,
                     'BrandID': model_view_obj.BrandID, 'isactive': model_view_obj.isactive,
                     'ModelDTLID': modeldtl_view_obj.ModelDTLID, 'RAM': modeldtl_view_obj.RAM,
