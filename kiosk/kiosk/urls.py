@@ -24,12 +24,17 @@ from UI.views import *
 print('bd', BASE_DIR)
 print('td', TEMPLATE_DIR)
 print('sd', STATICFILES_DIRS)
+
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/kiosk/', include('API.urls')),
     url(r'^login$', login, name='login'),
     url(r'^brandmaster$', brandmaster, name='brandmaster'),
+    url(r'^devicemaster$', devicemaster, name='devicemaster'),
 
     url(r'^modelmaster$', modelmaster, name='modelmaster'),
 

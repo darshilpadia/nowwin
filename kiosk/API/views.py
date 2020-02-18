@@ -77,11 +77,11 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             ins_obj = DeviceMaster.objects.create(
-                DeviceNumber=request.data.get('device_number'),
-                DeviceAddress=request.data.get('device_address'),
+                DeviceNumber=request.data.get('devicenumber'),
+                DeviceAddress=request.data.get('deviceaddress'),
                 City=request.data.get('city'),
                 State=request.data.get('state'),
-                DeviceMac=request.data.get('device_mac'),
+                DeviceMac=request.data.get('devicemac'),
 
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
