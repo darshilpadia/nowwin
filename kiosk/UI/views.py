@@ -87,7 +87,10 @@ def modelmaster(request):
             response = redirect('modelview.html', permanent=True)
         return response
     else:
-        return render(request, 'modelmaster.html', {})
+        r = Kiosk()
+        res = r.get_BrandView(request)
+        data = res.data.get('data')
+        return render(request, 'modelmaster.html', {'d': data})
 
 
 def brandview(request):
