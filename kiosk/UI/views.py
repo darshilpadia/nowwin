@@ -34,6 +34,25 @@ def brandmaster(request):
         return render(request, 'brandmaster.html', {})
 
 
+def devicemaster(request):
+    print('------', request.POST)
+    print('------', request)
+    if request.method == "POST":
+        request.data = {'devicenumber': request.POST.get('devicenumber'), 'devicemac': request.POST.get('devicemac'),
+                        'deviceaddress': request.POST.get('deviceaddress'),
+                        'city': request.POST.get('city'),
+                        'state': request.POST.get('state'),
+                        }
+        r = Kiosk()
+        res = r.ins_DeviceMaster(request)
+        print(res)
+        if res.data.get('result') == 'Success':
+            response = redirect('deviceview.html', permanent=True)
+        return response
+    else:
+        return render(request, 'devicemaster.html', {})
+
+
 def modelmaster(request):
     print('------model masert ----', request.POST)
     print('------', request)
@@ -68,16 +87,17 @@ def modelmaster(request):
             response = redirect('modelview.html', permanent=True)
         return response
     else:
-        return render(request, 'modelmaster.html', {})
+        r = Kiosk()
+        res = r.get_BrandView(request)
+        data = res.data.get('data')
+        return render(request, 'modelmaster.html', {'d': data})
 
 
 def brandview(request):
     print('------', request.POST)
-    print('------********(((((((((((', request)
+    print('------', request)
     r = Kiosk()
-    print('line 52 ui view')
     b = r.get_BrandView(request)
-    print('line 53 ui view')
     if b.data.get('result') == 'Success':
         data = b.data.get('data')
         print(data)
@@ -89,9 +109,14 @@ def brandview(request):
 def modelview(request):
     print('------', request.POST)
     print('------**************', request)
-    if request.method == "POST":
-        data = {'EmailID': request.POST.get('EmailID'), 'Password': request.POST.get('Password')}
-        print(data)
+    r = Kiosk()
+    # b_d = r.get_BrandView(request)
+    m_d = r.get_ModelView(request)
+    if m_d.data.get('result') == 'Success':
+        # brand_data = b_d.data.get('data')
+        model_data = m_d.data.get('data')
+        # print(brand_data)
+        return render(request, 'modelview.html', {'m_d': model_data})
     else:
         return render(request, 'modelview.html', {})
 

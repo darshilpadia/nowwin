@@ -96,11 +96,12 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             ins_obj = DeviceMaster.objects.create(
-                DeviceNumber=request.data.get('device_number'),
-                DeviceAddress=request.data.get('device_address'),
+                DeviceNumber=request.data.get('devicenumber'),
+                DeviceAddress=request.data.get('deviceaddress'),
                 City=request.data.get('city'),
                 State=request.data.get('state'),
-                DeviceMac=request.data.get('device_mac'),
+                DeviceMac=request.data.get('device'
+                                           'mac'),
 
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
@@ -226,16 +227,20 @@ class Kiosk(ModelViewSet):
 
             brand_view_obj = BrandMaster.objects.filter()
             print(brand_view_obj)
-            if request.data.get('flag'):
-                datalist = []
-                for x in brand_view_obj:
-                    datalist.append({'brandname': x.BrandName})
-                data = {'brand_list': datalist}
-                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
-                           'data': data}
+            try:
+                if request.data.get('flag'):
+                    datalist = []
+                    for x in brand_view_obj:
+                        datalist.append({'brandname': x.BrandName})
+                    data = {'brand_list': datalist}
+                    content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                               'data': data}
 
-            else:
+                else:
 
+                    content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                               'data': brand_view_obj}
+            except AttributeError as c:
                 content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
                            'data': brand_view_obj}
         except Exception as e:
@@ -247,9 +252,10 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def get_ModelView(self, request):
-        print('--', request.data)
+        # print('--', request.data)
         try:
             model_view_obj = ModelMaster.objects.filter(isactive=True)
+
             modeldtl_view_obj = ModelDTL.objects.get(ModelID_id=model_view_obj.ModelID)
 
             data = {'ModelID': model_view_obj.ModelID, 'ModelName': model_view_obj.ModelName,
