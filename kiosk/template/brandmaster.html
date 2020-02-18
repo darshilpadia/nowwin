@@ -278,7 +278,8 @@
                         {% csrf_token %}
                         <div class="c-field u-mb-small">
                             <label class="c-field__label" for="input1">Brand Name</label>
-                            <input class="c-input" type="text" id="brandname" placeholder="" name="brandname" required>
+                            <input class="c-input" type="text" id="brandname" placeholder="" name="brandname" value="{{ data.BrandName }}" required>
+                            <input class="c-input" type="hidden" id="brandid" placeholder="" name="brandid" value="{{ data.BrandID }}" required>
                         </div>
 
                         <button class="c-btn c-btn--info c-btn--fullwidth" type="submit">Submit</button>

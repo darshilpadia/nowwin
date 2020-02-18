@@ -226,16 +226,21 @@ class Kiosk(ModelViewSet):
 
             brand_view_obj = BrandMaster.objects.filter()
             print(brand_view_obj)
-            if request.data.get('flag'):
-                datalist = []
-                for x in brand_view_obj:
-                    datalist.append({'brandname': x.BrandName})
-                data = {'brand_list': datalist}
-                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
-                           'data': data}
+            try:
+                if request.data:
 
-            else:
+                    datalist = []
+                    for x in brand_view_obj:
+                        datalist.append({'brandname': x.BrandName})
+                    data = {'brand_list': datalist}
+                    content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                               'data': data}
 
+                else:
+
+                    content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                               'data': brand_view_obj}
+            except AttributeError as c:
                 content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
                            'data': brand_view_obj}
         except Exception as e:
@@ -250,19 +255,26 @@ class Kiosk(ModelViewSet):
         # print('--', request.data)
         try:
             model_view_obj = ModelMaster.objects.filter(isactive=True)
+            try:
+                if request.data.get('flag'):
+                    datalist = []
+                    for x in model_view_obj:
+                        datalist.append({'modelname': x.ModelName, 'modelid': x.ModelID})
+                    data = {'brand_list': datalist}
+                    content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                               'data': data}
+                else:
 
-            if request.data.get('flag'):
+                    content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model',
+                               'data': model_view_obj}
+            except AttributeError as cc:
                 datalist = []
                 for x in model_view_obj:
-                    datalist.append({'modelname': x.ModelName, 'modelid': x.ModelID})
+                    brandname = BrandMaster.objects.get(BrandID=x.BrandID_id)
+                    datalist.append({'modelname': x.ModelName, 'modelid': x.ModelID, 'brandname': brandname.BrandName})
                 data = {'brand_list': datalist}
                 content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
-                           'data': data}
-            else:
-
-                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model',
-                           'data': model_view_obj}
-
+                           'data': datalist}
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -288,7 +300,7 @@ class Kiosk(ModelViewSet):
     def get_ModelID_By_DeviceID(self, request):
         print('--', request.data)
         try:
-            user_view_obj = Mo.objects.filter(DeviceID=request.data.get('DeviceID'))
+            user_view_obj = ModelMaster.objects.filter(DeviceID=request.data.get('DeviceID'))
             data = {'user_list', user_view_obj}
             print(data)
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
@@ -334,6 +346,21 @@ class Kiosk(ModelViewSet):
             brand_view_obj = BrandMaster.objects.get(BrandID=request.data.get('BrandID'))
             data = {'BrandID': brand_view_obj.BrandID, 'BrandName': brand_view_obj.BrandName}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Brand', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def del_ModelByID(self, request):
+        print('--', request.data)
+        try:
+            brand_view_obj = BrandMaster.objects.get(BrandID=request.data.get('BrandID'))
+            brand_view_obj.isactive= False
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Brand',
+                       }
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,

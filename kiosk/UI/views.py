@@ -23,15 +23,59 @@ def brandmaster(request):
     print('------', request.POST)
     print('------', request)
     if request.method == "POST":
-        request.data = {'brand_name': request.POST.get('brandname')}
+        if request.POST.get('brandid') != 0:
+            request.data = {'BrandID': request.POST.get('brandid'), 'BrandName': request.POST.get('brandname')}
+            r = Kiosk()
+            res = r.update_BrandMaster(request)
+            if res.data.get('result') == 'Success':
+                response = redirect('brandview', permanent=True)
+            return response
+        else:
+            request.data = {'brand_name': request.POST.get('brandname')}
+            r = Kiosk()
+            res = r.ins_BrandMaster(request)
+            print(res)
+            if res.data.get('result') == 'Success':
+                response = redirect('brandview', permanent=True)
+            return response
+    else:
+        data = {'BrandID': 0, 'BrandName': ''}
+        return render(request, 'brandmaster.html', {'data': data})
+
+
+def del_brandmasterbyid(request, brand_id):
+    print('------', request.POST)
+    print('------', request)
+    if request.method == "GET":
+        request.data = {'BrandID': brand_id}
         r = Kiosk()
-        res = r.ins_BrandMaster(request)
+        res = r.get_BrandByID(request)
         print(res)
         if res.data.get('result') == 'Success':
-            response = redirect('brandview.html', permanent=True)
-        return response
+            data = res.data.get('data')
+            response = redirect('brandview', permanent=True)
+            return response
     else:
-        return render(request, 'brandmaster.html', {})
+        response = redirect('brandview', permanent=True)
+        return response
+
+
+
+def brandmasterbyid(request, brand_id):
+    print('------', request.POST)
+    print('------', request)
+    if request.method == "GET":
+        request.data = {'BrandID': brand_id}
+        r = Kiosk()
+        res = r.get_BrandByID(request)
+        print(res)
+        if res.data.get('result') == 'Success':
+            data = res.data.get('data')
+            return render(request, 'brandmaster.html', {'data': data})
+        # return response
+    else:
+        data = {'BrandID': 0, 'BrandName': ''}
+        return render(request, 'brandmaster.html', {'data': data})
 
 
 def devicemaster(request):
@@ -112,7 +156,7 @@ def modelview(request):
     if m_d.data.get('result') == 'Success':
         # brand_data = b_d.data.get('data')
         model_data = m_d.data.get('data')
-        # print(brand_data)
+        print(model_data)
         return render(request, 'modelview.html', {'m_d': model_data})
     else:
         return render(request, 'modelview.html', {})

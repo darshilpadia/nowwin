@@ -6,6 +6,7 @@ from django.db import models
 class BrandMaster(models.Model):
     BrandID = models.AutoField(primary_key=True)
     BrandName = models.CharField(max_length=20)
+    isactive = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'BrandMaster'
