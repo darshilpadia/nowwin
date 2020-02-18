@@ -35,8 +35,27 @@ class Utils():
             return False
 
 
+class ModelAPIView(ModelViewSet):
+    queryset = ModelMaster.objects.all()
+    serializer_class = ModelMasterSerializer
+
+    @action(methods=['POST'], detail=False)
+    def get_ModelView(self, request):
+        print('--', request.data)
+        try:
+            model_view_obj = ModelMaster.objects.filter(isactive=True)
+            data = {'model_list', model_view_obj}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+
+        return Response(content)
+
+
 class Kiosk(ModelViewSet):
-    queryset = BrandMaster.objects.all()
+    queryset = DeviceMaster.objects.all()
     serializer_class = BrandMasterSerializer
 
     # queryset1 = ModelMaster.objects.all()
@@ -176,6 +195,7 @@ class Kiosk(ModelViewSet):
         return Response(content)
 
         # ADMIN SIDE
+
     @action(methods=['POST'], detail=False)
     def ins_ModelMaster(self, request):
         print('--', request.data)
@@ -203,10 +223,21 @@ class Kiosk(ModelViewSet):
     def get_BrandView(self, request):
         print('**************************************call bc')
         try:
+
             brand_view_obj = BrandMaster.objects.filter()
-            data = {'brand_list', brand_view_obj}
-            print('.....call',data)
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand', 'data': brand_view_obj}
+            print(brand_view_obj)
+            if request.data.get('flag'):
+                datalist = []
+                for x in brand_view_obj:
+                    datalist.append({'brandname': x.BrandName})
+                data = {'brand_list': datalist}
+                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                           'data': data}
+
+            else:
+
+                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                           'data': brand_view_obj}
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -216,11 +247,22 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def get_ModelView(self, request):
-        print('--', request.data)
+        # print('--', request.data)
         try:
             model_view_obj = ModelMaster.objects.filter(isactive=True)
-            data = {'model_list', model_view_obj}
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
+
+            if request.data.get('flag'):
+                datalist = []
+                for x in model_view_obj:
+                    datalist.append({'modelname': x.ModelName, 'modelid': x.ModelID})
+                data = {'brand_list': datalist}
+                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
+                           'data': data}
+            else:
+
+                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model',
+                           'data': model_view_obj}
+
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -283,8 +325,6 @@ class Kiosk(ModelViewSet):
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
         return Response(content)
-
-
 
     # ADMIN SIDE
     @action(methods=['POST'], detail=False)
