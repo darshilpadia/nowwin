@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from ..API.views import *
+from API.views import *
 
 
 # Create your views here.
