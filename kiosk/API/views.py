@@ -35,23 +35,23 @@ class Utils():
             return False
 
 
-class ModelAPIView(ModelViewSet):
-    queryset = ModelMaster.objects.all()
-    serializer_class = ModelMasterSerializer
-
-    @action(methods=['POST'], detail=False)
-    def get_ModelView(self, request):
-        print('--', request.data)
-        try:
-            model_view_obj = ModelMaster.objects.filter(isactive=True)
-            data = {'model_list', model_view_obj}
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
-        except Exception as e:
-            print(str(e))
-            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                       'message': 'Error in fetching data'}
-
-        return Response(content)
+# class ModelAPIView(ModelViewSet):
+#     queryset = ModelMaster.objects.all()
+#     serializer_class = ModelMasterSerializer
+#
+#     @action(methods=['POST'], detail=False)
+#     def get_ModelView(self, request):
+#         print('--', request.data)
+#         try:
+#             model_view_obj = ModelMaster.objects.filter(isactive=True)
+#             data = {'model_list', model_view_obj}
+#             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
+#         except Exception as e:
+#             print(str(e))
+#             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+#                        'message': 'Error in fetching data'}
+#
+#         return Response(content)
 
 
 class Kiosk(ModelViewSet):
@@ -60,6 +60,12 @@ class Kiosk(ModelViewSet):
 
     # queryset1 = ModelMaster.objects.all()
     # serializer_class1 = ModelMasterSerializer
+
+
+
+
+
+
 
     # KIOSK
     @action(methods=['POST'], detail=False)
@@ -250,17 +256,27 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             model_view_obj = ModelMaster.objects.filter(isactive=True)
-            if request.data.get('flag'):
-                datalist = []
-                for x in model_view_obj:
-                    datalist.append({'modelname': x.ModelName, 'modelid': x.ModelID})
-                data = {'brand_list': datalist}
-                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
-                           'data': data}
-            else:
+            modeldtl_view_obj = ModelDTL.objects.get(ModelID=model_view_obj.ModelID)
+            data = {'ModelID': model_view_obj.ModelID, 'ModelName': model_view_obj.ModelName,
+                    'BrandID': model_view_obj.BrandID, 'isactive': model_view_obj.isactive,
+                    'ModelDTLID': modeldtl_view_obj.ModelDTLID, 'RAM': modeldtl_view_obj.RAM,
+                    'Storage': modeldtl_view_obj.Storage, 'price': modeldtl_view_obj.price,
+                    'back_camera1': modeldtl_view_obj.back_camera1, 'back_camera2': modeldtl_view_obj.back_camera2,
+                    'back_camera3': modeldtl_view_obj.back_camera3, 'back_camera4': modeldtl_view_obj.back_camera4,
+                    'back_camera5': modeldtl_view_obj.back_camera5, 'front_camara1': modeldtl_view_obj.front_camara1,
+                    'front_camara2': modeldtl_view_obj.front_camara2, 'front_camara3': modeldtl_view_obj.front_camara3,
+                    'front_camara4': modeldtl_view_obj.front_camara4, 'screen_size': modeldtl_view_obj.screen_size,
+                    'SIM_type': modeldtl_view_obj.SIM_type, 'expandable_storage': modeldtl_view_obj.expandable_storage,
+                    'color1': modeldtl_view_obj.color1, 'color2': modeldtl_view_obj.color2,
+                    'color3': modeldtl_view_obj.color3, 'color4': modeldtl_view_obj.color4,
+                    'color5': modeldtl_view_obj.color5, 'color6': modeldtl_view_obj.color6,
+                    'color7': modeldtl_view_obj.color7, 'processor': modeldtl_view_obj.processor,
+                    'osdtl': modeldtl_view_obj.osdtl, 'bdtl': modeldtl_view_obj.bdtl,
+                    'fingerprint': modeldtl_view_obj.fingerprint, 'back_flashlight': modeldtl_view_obj.back_flashlight,
+                    'front_flashlight': modeldtl_view_obj.front_flashlight}
 
-                content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model',
-                           'data': model_view_obj}
+            content = {'result': 'Success', 'data': data}
+
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
