@@ -90,7 +90,7 @@ def brandmasterbyid(request, brand_id):
 
 
 def devicemaster(request):
-    print('------', request.POST)
+    print('------******************', request.POST)
     print('------', request)
     if request.method == "POST":
         request.data = {'DeviceNumber': request.POST.get('devicenumber'), 'DeviceMac': request.POST.get('devicemac'),
@@ -98,8 +98,9 @@ def devicemaster(request):
                         'City': request.POST.get('city'),
                         'State': request.POST.get('state'),'DeviceID':request.POST.get('DeviceID')
                         }
+        print(request.POST.get('DeviceID'))
         r = Kiosk()
-        if request.POST.get('DeviceID') is not None:
+        if request.POST.get('DeviceID') is not '':
             print('in update')
             res = r.update_Device(request)
         else:
