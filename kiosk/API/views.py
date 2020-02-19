@@ -171,7 +171,7 @@ class Kiosk(ModelViewSet):
                 front_flashlight=request.data.get('front_flashlight')
 
             )
-            print ('update puru')
+            print('update puru')
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
         except Exception as e:
             print(str(e))
@@ -546,19 +546,21 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def get_DashbordData(self, request):
-        print('--', request.data)
+        # print('--', request.data)
         try:
             device_view_obj = DeviceMaster.objects.filter(isactive=True).count()
             model_view_obj = ModelMaster.objects.filter(isactive=True).count()
             brand_view_ogject = BrandMaster.objects.filter().count()
+            devicedtl_view_obj = DeviceDTL.objects.filter().count()
 
-            data = {'Brand_count': brand_view_ogject, 'Device_count': device_view_obj, 'Model_count': model_view_obj}
+            data = {'Brand_count': brand_view_ogject, 'Device_count': device_view_obj, 'Model_count': model_view_obj,'DeviceDTL_count':devicedtl_view_obj}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of dashbord',
                        'data': data}
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data in get_DashbordData'}
+        return Response(content)
 
     def update_Model(self, request):
         print('--', request.data)
