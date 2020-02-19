@@ -165,50 +165,58 @@
                     <table class="c-table">
 
                         <caption class="c-table__title">
-                            Models
-                            <small>List of All Model integrated to device</small>
+                            Devidce Details
+                            <small>List of All total impression</small>
 
-                            <a class="c-table__title-action" href="{%url 'modelmaster'%}">
+<!--                            <a class="c-table__title-action" href="{%url 'devicemaster'%}">-->
 
-                                 <i class="fa fa-plus-square" style="font-size:36px;"></i>
-                                    Add new model
-                            </a>
+<!--                                 <i class="fa fa-plus-square" style="font-size:36px;"></i>-->
+<!--                                    Add new device-->
+<!--                            </a>-->
                         </caption>
 
                         <thead class="c-table__head c-table__head--slim">
                         <tr class="c-table__row">
-                            <th class="c-table__cell c-table__cell--head">Brand_Name</th>
-                            <th class="c-table__cell c-table__cell--head">Model_Name</th>
-                            <th class="c-table__cell c-table__cell--head">Edit</th>
-                            <th class="c-table__cell c-table__cell--head">Delete</th>
-                            <!--                              <th class="c-table__cell c-table__cell&#45;&#45;head">Budget</th>-->
-                            <!--                              <th class="c-table__cell c-table__cell&#45;&#45;head">Status</th>-->
-                            <!--                              <th class="c-table__cell c-table__cell&#45;&#45;head">-->
-                            <!--                                  <span class="u-hidden-visually">Actions</span>-->
-                            <!--                              </th>-->
+                            <th class="c-table__cell c-table__cell--head">Brand Name</th>
+                            <th class="c-table__cell c-table__cell--head">Model Name</th>
+                            <th class="c-table__cell c-table__cell--head">Device Numbae</th>
+                            <th class="c-table__cell c-table__cell--head">Screen Time</th>
+                            <th class="c-table__cell c-table__cell--head">Camera Click</th>
+                            <th class="c-table__cell c-table__cell--head">Date/Time</th>
+<!--                            <th class="c-table__cell c-table__cell&#45;&#45;head">-->
+<!--                                <span class="u-hidden-visually">Actions</span>-->
+<!--                            </th>-->
                         </tr>
                         </thead>
 
                         <tbody>
-                        {% for m_d in m_d %}
-                        <tr class="c-table__row c-table__row--danger">
-                            <td class="c-table__cell">
-                                {{ m_d.BrandName }}
-                            </td>
+<!--                        {% for x in d_d %}-->
+<!--                        <tr class="c-table__row">-->
+<!--                            <td class="c-table__cell">{{ x.DeviceNumber }}-->
 
-                            <td class="c-table__cell">
-                                {{ m_d.ModelName }}
-                            </td>
+<!--                            </td>-->
 
-                            <td class="c-table__cell"><a href="{% url 'modelmasterupdate' m_d.ModelID %}"><i
-                                    class="fa fa-edit"
-                                    style="font-size:36px"></i></a>
-                            </td>
-                            <td>
-                                <a href="Delete"><i class="fa fa-trash-o" style="font-size:36px"></i></a>
-                            </td>
-                        </tr>
-                        {% endfor %}
+<!--                            <td class="c-table__cell">{{ x.DeviceAddress }}-->
+
+<!--                            </td>-->
+
+<!--                            <td class="c-table__cell">{{ x.City }}-->
+
+<!--                            </td>-->
+
+<!--                            <td class="c-table__cell"><a href="{% url 'devicemasterupdate' x.DeviceID %}"><i-->
+<!--                                    class="fa fa-edit"-->
+<!--                                    style="font-size:36px"></i></a>-->
+<!--                            </td>-->
+
+<!--                            <td>-->
+<!--                                <a href="Delete"><i class="fa fa-trash-o" style="font-size:36px"></i></a>-->
+<!--                            </td>-->
+
+
+<!--                        </tr>-->
+<!--                        {% endfor %}-->
+
                         </tbody>
                     </table>
                 </div>
