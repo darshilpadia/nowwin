@@ -224,7 +224,7 @@ class Kiosk(ModelViewSet):
         print('**************************************call bc')
         try:
 
-            brand_view_obj = BrandMaster.objects.filter()
+            brand_view_obj = BrandMaster.objects.filter(isactive=True)
             print(brand_view_obj)
             try:
                 if request.data:
