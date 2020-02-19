@@ -20,6 +20,7 @@
     <!-- Stylesheet -->
     <link rel="stylesheet" href="{% static 'css/main.min3661.css' %}">
     <link rel="stylesheet" href="{% static 'css/colorpicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mycss.css' %}">
 </head>
 <body class="o-page">
 <!--[if lte IE 9]>
@@ -276,9 +277,17 @@
 
                 <div class="c-invoice">
                     <form class="c-card__body" method="POST" action="{% url 'modelmaster' %}">
+                        {% csrf_token %}
+                        <input class="c-input" type="hidden" id="ModelID" placeholder="" name="ModelID"
+                               value="{{form_data.ModelID}}">
+                        <input class="c-input" type="hidden" id="ModelDTLID" placeholder="" name="ModelDTLID"
+                               value="{{form_data.ModelDTLID}}">
+                        <input class="c-input" type="hidden" id="BrandID_hidden" placeholder="" name="BrandID_hidden"
+                               value="{{form_data.BrandID}}">
+
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Brand Name</label>
-                            <select class="c-input">
+                            <select class="c-input" name="brandid">
                                 {% for data in d %}
                                 <option value="{{ data.BrandID }}">{{ data.BrandName }}</option>
                                 {% endfor %}
@@ -286,137 +295,178 @@
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Model Name</label>
-                            <input class="c-input" type="text" id="modelname" placeholder="" name="modelname" required>
+                            <input class="c-input" type="text" id="modelname" placeholder="" name="modelname"
+                                   value="{{form_data.ModelName}}" required>
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">RAM</label>
-                            <input class="c-input" type="text" id="ram" placeholder="" name="ram" required>
+                            <input class="c-input" type="text" id="ram" placeholder="" name="ram"
+                                   value="{{form_data.RAM}}" required>
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Storage</label>
-                            <input class="c-input" type="text" id="storage" placeholder="" name="storage" required>
+                            <input class="c-input" type="text" id="storage" placeholder="" name="storage"
+                                   value="{{form_data.Storage}}" required>
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">price</label>
-                            <input class="c-input" type="text" id="price" placeholder="" name="price" required>
+                            <input class="c-input" type="text" id="price" placeholder="" name="price"
+                                   value="{{form_data.price}}" required>
                         </div>
+
                         <div class="c-field u-mb-small">
-                            <label class="c-field__label">back_camera1</label>
+                            <label class="c-field__label">Back Camera Count</label>
+                            <input class="c-input" type="number" id="bc_count" placeholder="" name="bc_count" required
+                                   onblur="zz(this)" value="{{form_data.bc_count}}">
+                        </div>
+
+                        <div class="c-field u-mb-small back_camera" id="bc1">
+                            <label class="c-field__label ">Back Camera - 1</label>
                             <input class="c-input" type="text" id="back_camera1" placeholder="" name="back_camera1"
-                                   required>
+                                   value="{{form_data.back_camera1}}"
+                            >
                         </div>
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">back_camera2</label>
+                        <div class="c-field u-mb-small back_camera" id="bc2">
+                            <label class="c-field__label">Back Camera - 2</label>
                             <input class="c-input" type="text" id="back_camera2" placeholder="" name="back_camera2"
-                                   required>
+                                   value="{{form_data.back_camera2}}"
+                            >
                         </div>
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">back_camera3</label>
+                        <div class="c-field u-mb-small back_camera" id="bc3">
+                            <label class="c-field__label">Back Camera - 3</label>
                             <input class="c-input" type="text" id="back_camera3" placeholder="" name="back_camera3"
-                                   required>
+                                   value="{{form_data.back_camera3}}"
+                            >
                         </div>
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">back_camera4</label>
+                        <div class="c-field u-mb-small back_camera" id="bc4">
+                            <label class="c-field__label">Back Camera - 4</label>
                             <input class="c-input" type="text" id="back_camera4" placeholder="" name="back_camera4"
-                                   required>
+                                   value="{{form_data.back_camera4}}"
+                            >
                         </div>
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">back_camera5</label>
+                        <div class="c-field u-mb-small back_camera" id="bc5">
+                            <label class="c-field__label">Back Camera - 5</label>
                             <input class="c-input" type="text" id="back_camera5" placeholder="" name="back_camera5"
-                                   required>
+                                   value="{{form_data.back_camera5}}"
+                            >
                         </div>
+
                         <div class="c-field u-mb-small">
-                            <label class="c-field__label">front_camera1</label>
+                            <label class="c-field__label">Front Camera Count</label>
+                            <input class="c-input" type="number" id="fc_count" placeholder="" name="fc_count" required
+                                   value="{{form_data.fc_count}}"
+                                   onblur="yy(this)">
+                        </div>
+
+
+                        <div class="c-field u-mb-small back_camera" id="fc1">
+                            <label class="c-field__label">Front Camera - 1</label>
                             <input class="c-input" type="text" id="front_camera1" placeholder="" name="front_camera1"
-                                   required>
+                                   value="{{form_data.front_camera1}}"
+                            >
                         </div>
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">front_camera2</label>
+                        <div class="c-field u-mb-small back_camera" id="fc2">
+                            <label class="c-field__label">Front Camera - 2</label>
                             <input class="c-input" type="text" id="front_camera2" placeholder="" name="front_camera2"
-                                   required>
+                                   value="{{form_data.front_camera2}}"
+                            >
                         </div>
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">front_camera3</label>
+                        <div class="c-field u-mb-small back_camera" id="fc3">
+                            <label class="c-field__label">Front Camera - 3</label>
                             <input class="c-input" type="text" id="front_camera3" placeholder="" name="front_camera3"
-                                   required>
+                                   value="{{form_data.front_camera3}}"
+                            >
                         </div>
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">front_camera4</label>
+                        <div class="c-field u-mb-small back_camera" id="fc4">
+                            <label class="c-field__label">Front Camera - 4</label>
+
                             <input class="c-input" type="text" id="front_camera4" placeholder="" name="front_camera4"
-                                   required>
+                                   value="{{form_data.front_camera4}}"
+
+                            >
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">screen size</label>
                             <input class="c-input" type="text" id="screen_size" placeholder="" name="screen_size"
+                                   value="{{form_data.screen_size}}"
                                    required>
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">SIM type</label>
                             <input class="c-input" type="text" id="sim_type" placeholder="" name="sim_type"
+                                   value="{{form_data.sim_type}}"
                                    required>
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Expandable Storage</label>
                             <input class="c-input" type="text" id="expandable_storage" placeholder=""
-                                   name="expandable_storage"
+                                   name="expandable_storage" value="{{form_data.expandable_storage}}"
                                    required>
                         </div>
 
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Processor</label>
                             <input class="c-input" type="text" id="processor" placeholder=""
-                                   name="processor"
+                                   name="processor" value="{{form_data.processor}}"
                                    required>
                         </div>
 
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">OS_Details</label>
                             <input class="c-input" type="text" id="os_details" placeholder=""
-                                   name="os_details"
+                                   name="os_details" value="{{form_data.os_details}}"
                                    required>
                         </div>
 
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">CPU_Details</label>
                             <input class="c-input" type="text" id="cpu_details" placeholder=""
-                                   name="cpu_details"
+                                   name="cpu_details" value="{{form_data.cpu_details}}"
                                    required>
                         </div>
 
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Battery_Details</label>
                             <input class="c-input" type="text" id="battery_details" placeholder=""
-                                   name="battery_details"
+                                   name="battery_details" value="{{form_data.battery_details}}"
                                    required>
                         </div>
 
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Fingerprints</label>
                             <input class="c-input" type="text" id="fingerprints" placeholder=""
-                                   name="fingerprints"
+                                   name="fingerprints" value="{{form_data.back_camera2}}"
                                    required>
                         </div>
 
+                        <div class="c-toggle u-mb-small">
+                            <label class="c-field__label">Back Flash</label>
+                            <div class="c-toggle__btn is-active">
+                                <label class="c-toggle__label" for="toggle1">
+                                    <input class="c-toggle__input" id="toggle1" name="backflash" type="radio" checked>Yes
+                                </label>
+                            </div>
 
-
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">Back_Flash</label>
-                            <input type="radio" id="backflash1" placeholder=""
-                                   name="backflash"
-                            >Yes
-                            <input type="radio" id="backflash2" placeholder=""
-                                   name="backflash"
-                            >No
+                            <div class="c-toggle__btn">
+                                <label class="c-toggle__label" for="toggle2">
+                                    <input class="c-toggle__input" id="toggle2" name="backflash" type="radio">No
+                                </label>
+                            </div>
                         </div>
 
-                        <div class="c-field u-mb-small">
-                            <label class="c-field__label">Front_Flash</label>
-                            <input type="radio" id="frontflash1" placeholder=""
-                                   name="frontflash"
-                            >Yes
-                            <input type="radio" id="frontflash2" placeholder=""
-                                   name="frontflash"
-                            >No
+                        <div class="c-toggle u-mb-small">
+                            <label class="c-field__label">Front Flash</label>
+                            <div class="c-toggle__btn is-active">
+                                <label class="c-toggle__label" for="toggle1">
+                                    <input class="c-toggle__input" id="toggle3" name="frontflash" type="radio" checked>Yes
+                                </label>
+                            </div>
+
+                            <div class="c-toggle__btn">
+                                <label class="c-toggle__label" for="toggle2">
+                                    <input class="c-toggle__input" id="toggle4" name="frontflash" type="radio">No
+                                </label>
+                            </div>
                         </div>
 
 
@@ -431,19 +481,15 @@
 </main><!-- // .o-page__content -->
 
 <!-- Main javascsript -->
-<script src="{% static 'js/main.min3661.js' %}">
-</script>
 
-<script src="{% static 'js/colorpicker.js' %}">
+<script src="{% static 'js/main.min3661.js' %}"></script>
 
-</script>
+<script src="{% static 'js/colorpicker.js' %}"></script>
+<script src="{% static 'js/myjs.js' %}"></script>
 
 <script>
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
             ga('create','UA-88739867-2','auto');ga('send','pageview')
-
-
-
 
 
 

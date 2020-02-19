@@ -2,3 +2,9 @@
 {
     border:1px solid black;
 }
+
+.back_camera
+{
+    display:none;
+    transition: all 2s;
+}
