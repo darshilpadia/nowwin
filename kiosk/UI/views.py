@@ -1439,7 +1439,7 @@ def devicemaster(request):
         request.data = {'DeviceNumber': request.POST.get('devicenumber'), 'DeviceMac': request.POST.get('devicemac'),
                         'DeviceAddress': request.POST.get('deviceaddress'),
                         'City': request.POST.get('city'),
-                        'State': request.POST.get('state'),'DeviceID':request.POST.get('DeviceID')
+                        'State': request.POST.get('state'), 'DeviceID': request.POST.get('DeviceID')
                         }
         print(request.POST.get('DeviceID'))
         r = Kiosk()
@@ -1608,6 +1608,13 @@ def deviceview(request):
         return render(request, 'modelview.html', {})
 
 
+def dashboard(request):
+    r = Kiosk()
+    d_d = r.get_DashbordData(request)
+    if d_d.data.get('result') == 'Success':
+        return render(request, 'projects.html', {'d_d': d_d.data.get('data')})
+
+
 def forgotpassword(request):
     print('------', request.POST)
     print('------', request)
@@ -1617,3 +1624,10 @@ def forgotpassword(request):
     else:
 
         return render(request, 'forgot-password.html', {})
+
+
+def del_model(request,model_id):
+    print('---')
+    r = Kiosk()
+    # res =
+    
