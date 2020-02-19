@@ -20,13 +20,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from .settings import BASE_DIR, TEMPLATE_DIR, STATICFILES_DIRS
 from UI.views import *
 
-
 print('bd', BASE_DIR)
 print('td', TEMPLATE_DIR)
 print('sd', STATICFILES_DIRS)
-
-
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,17 +32,17 @@ urlpatterns = [
     url(r'^brandmaster$', brandmaster, name='brandmaster'),
     url(r'^brandmaster/(?P<brand_id>\d+)/$', brandmasterbyid, name='brandmasterupdate'),
     url(r'^devicemaster$', devicemaster, name='devicemaster'),
+    url(r'^brandmaster/(?P<brand_id>\d+)/$', brandmasterbyid, name='brandmasterupdate'),
+    url(r'^modelmaster/(?P<model_id>\d+)/$', modelmasterbyid, name='modelmasterupdate'),
+    url(r'^devicemaster/(?P<device_id>\d+)/$', devicemasterbyid, name='devicemasterupdate'),
 
     url(r'^modelmaster$', modelmaster, name='modelmaster'),
-
-
     url(r'^brandview$', brandview, name='brandview'),
     url(r'^modelview$', modelview, name='modelview'),
     url(r'^deviceview$', deviceview, name='deviceview'),
     # url(r'^userview$', userview, name='userview'),
 
-    url(r'^forgotpassword$',forgotpassword,name='forgotpassword')
-
+    url(r'^forgotpassword$', forgotpassword, name='forgotpassword')
 
 ]
 urlpatterns += staticfiles_urlpatterns()

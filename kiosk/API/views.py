@@ -35,23 +35,23 @@ class Utils():
             return False
 
 
-class ModelAPIView(ModelViewSet):
-    queryset = ModelMaster.objects.all()
-    serializer_class = ModelMasterSerializer
-
-    @action(methods=['POST'], detail=False)
-    def get_ModelView(self, request):
-        print('--', request.data)
-        try:
-            model_view_obj = ModelMaster.objects.filter(isactive=True)
-            data = {'model_list', model_view_obj}
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
-        except Exception as e:
-            print(str(e))
-            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                       'message': 'Error in fetching data'}
-
-        return Response(content)
+# class ModelAPIView(ModelViewSet):
+#     queryset = ModelMaster.objects.all()
+#     serializer_class = ModelMasterSerializer
+#
+#     @action(methods=['POST'], detail=False)
+#     def get_ModelView(self, request):
+#         print('--', request.data)
+#         try:
+#             model_view_obj = ModelMaster.objects.filter(isactive=True)
+#             data = {'model_list', model_view_obj}
+#             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Model', 'data': data}
+#         except Exception as e:
+#             print(str(e))
+#             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+#                        'message': 'Error in fetching data'}
+#
+#         return Response(content)
 
 
 class Kiosk(ModelViewSet):
@@ -96,11 +96,11 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             ins_obj = DeviceMaster.objects.create(
-                DeviceNumber=request.data.get('devicenumber'),
-                DeviceAddress=request.data.get('deviceaddress'),
-                City=request.data.get('city'),
-                State=request.data.get('state'),
-                DeviceMac=request.data.get('devicemac'),
+                DeviceNumber=request.data.get('DeviceNumber'),
+                DeviceAddress=request.data.get('DeviceAddress'),
+                City=request.data.get('City'),
+                State=request.data.get('State'),
+                DeviceMac=request.data.get('DeviceMac'),
 
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
@@ -139,39 +139,39 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             ins_obj = ModelDTL.objects.create(
-                ModelID=request.data('modelid'),
-                ModelName=request.data('modelname', ''),
-                RAM=request.data('ram', ''),
-                Storage=request.data('storage', ''),
-                price=request.data('price', 0),
-                back_camera1=request.data('back_camera1', ''),
-                back_camera2=request.data('back_camera2', ''),
-                back_camera3=request.data('back_camera3', ''),
-                back_camera4=request.data('back_camera4', ''),
-                back_camera5=request.data('back_camera5', ''),
-                front_camara1=request.data('front_camara1', ''),
-                front_camara2=request.data('front_camara2', ''),
-                front_camara3=request.data('front_camara3', ''),
-                front_camara4=request.data('front_camara4', ''),
-                screen_size=request.data('screen_size', ''),
-                SIM_type=request.data('SIM_type', ''),
-                expandable_storage=request.data('expandable_storage', ''),
-                color1=request.data('color1', ''),
-                color2=request.data('color2', ''),
-                color3=request.data('color3', ''),
-                color4=request.data('color4', ''),
-                color5=request.data('color5', ''),
-                color6=request.data('color6', ''),
-                color7=request.data('color7', ''),
-                processor=request.data('processor', ''),
-                osdtl=request.data('osdtl', ''),
-                cpudtl=request.data('cpudtl', ''),
-                bdtl=request.data('bdtl', ''),
-                fingerprint=request.data('fingerprint', ''),
-                back_flashlight=request.data('back_flashlight', ''),
-                front_flashlight=request.data('front_flashlight', '')
+                ModelID_id=request.data.get('ModelID'),
+                RAM=request.data.get('ram'),
+                Storage=request.data.get('storage'),
+                price=request.data.get('price'),
+                back_camera1=request.data.get('back_camera1'),
+                back_camera2=request.data.get('back_camera2'),
+                back_camera3=request.data.get('back_camera3'),
+                back_camera4=request.data.get('back_camera4'),
+                back_camera5=request.data.get('back_camera5'),
+                front_camara1=request.data.get('front_camara1'),
+                front_camara2=request.data.get('front_camara2'),
+                front_camara3=request.data.get('front_camara3'),
+                front_camara4=request.data.get('front_camara4'),
+                screen_size=request.data.get('screen_size'),
+                SIM_type=request.data.get('sim_type'),
+                expandable_storage=request.data.get('expandable_storage'),
+                color1=request.data.get('color1'),
+                color2=request.data.get('color2'),
+                color3=request.data.get('color3'),
+                color4=request.data.get('color4'),
+                color5=request.data.get('color5'),
+                color6=request.data.get('color6'),
+                color7=request.data.get('color7'),
+                processor=request.data.get('processor'),
+                osdtl=request.data.get('osdtl'),
+                cpudtl=request.data.get('cpudtl'),
+                bdtl=request.data.get('bdtl'),
+                fingerprint=request.data.get('fingerprint'),
+                back_flashlight=request.data.get('back_flashlight'),
+                front_flashlight=request.data.get('front_flashlight')
 
             )
+            print ('update puru')
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
         except Exception as e:
             print(str(e))
@@ -200,10 +200,16 @@ class Kiosk(ModelViewSet):
     def ins_ModelMaster(self, request):
         print('--', request.data)
         try:
-            ins_obj = BrandMaster.objects.create(
-                ModelName=request.data.get('modelname')
+
+            ins_obj = ModelMaster.objects.create(
+                ModelName=request.data.get('modelname'),
+                BrandID_id=request.data.get('brandid')
+
             )
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
+            print('insert done')
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added',
+                       'ModelID': ins_obj.ModelID
+                       }
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -224,11 +230,10 @@ class Kiosk(ModelViewSet):
         print('**************************************call bc')
         try:
 
-            brand_view_obj = BrandMaster.objects.filter(isactive=True)
+            brand_view_obj = BrandMaster.objects.filter()
             print(brand_view_obj)
             try:
-                if request.data:
-
+                if request.data.get('flag'):
                     datalist = []
                     for x in brand_view_obj:
                         datalist.append({'brandname': x.BrandName})
@@ -271,8 +276,8 @@ class Kiosk(ModelViewSet):
                 datalist = []
                 for x in model_view_obj:
                     brandname = BrandMaster.objects.get(BrandID=x.BrandID_id)
-                    datalist.append({'modelname': x.ModelName, 'modelid': x.ModelID, 'brandname': brandname.BrandName})
-                data = {'brand_list': datalist}
+                    datalist.append({'ModelName': x.ModelName, 'ModelID': x.ModelID, 'BrandName': brandname.BrandName})
+                # data = {'brand_list': datalist}
                 content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of Brand',
                            'data': datalist}
         except Exception as e:
@@ -281,6 +286,41 @@ class Kiosk(ModelViewSet):
                        'message': 'Error in fetching data'}
 
         return Response(content)
+
+    # @action(methods=['POST'], detail=False)
+    # def get_ModelView(self, request):
+    #     # print('--', request.data)
+    #     try:
+    #         model_view_obj = ModelMaster.objects.filter(isactive=True)
+    #
+    #         modeldtl_view_obj = ModelDTL.objects.get(ModelID_id=model_view_obj.ModelID)
+    #
+    #         data = {'ModelID': model_view_obj.ModelID, 'ModelName': model_view_obj.ModelName,
+    #                 'BrandID': model_view_obj.BrandID, 'isactive': model_view_obj.isactive,
+    #                 'ModelDTLID': modeldtl_view_obj.ModelDTLID, 'RAM': modeldtl_view_obj.RAM,
+    #                 'Storage': modeldtl_view_obj.Storage, 'price': modeldtl_view_obj.price,
+    #                 'back_camera1': modeldtl_view_obj.back_camera1, 'back_camera2': modeldtl_view_obj.back_camera2,
+    #                 'back_camera3': modeldtl_view_obj.back_camera3, 'back_camera4': modeldtl_view_obj.back_camera4,
+    #                 'back_camera5': modeldtl_view_obj.back_camera5, 'front_camara1': modeldtl_view_obj.front_camara1,
+    #                 'front_camara2': modeldtl_view_obj.front_camara2, 'front_camara3': modeldtl_view_obj.front_camara3,
+    #                 'front_camara4': modeldtl_view_obj.front_camara4, 'screen_size': modeldtl_view_obj.screen_size,
+    #                 'SIM_type': modeldtl_view_obj.SIM_type, 'expandable_storage': modeldtl_view_obj.expandable_storage,
+    #                 'color1': modeldtl_view_obj.color1, 'color2': modeldtl_view_obj.color2,
+    #                 'color3': modeldtl_view_obj.color3, 'color4': modeldtl_view_obj.color4,
+    #                 'color5': modeldtl_view_obj.color5, 'color6': modeldtl_view_obj.color6,
+    #                 'color7': modeldtl_view_obj.color7, 'processor': modeldtl_view_obj.processor,
+    #                 'osdtl': modeldtl_view_obj.osdtl, 'bdtl': modeldtl_view_obj.bdtl,
+    #                 'fingerprint': modeldtl_view_obj.fingerprint, 'back_flashlight': modeldtl_view_obj.back_flashlight,
+    #                 'front_flashlight': modeldtl_view_obj.front_flashlight}
+    #
+    #         content = {'result': 'Success', 'data': data}
+    #
+    #     except Exception as e:
+    #         print(str(e))
+    #         content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+    #                    'message': 'Error in fetching data'}
+    #
+    #     return Response(content)
 
     @action(methods=['POST'], detail=False)
     def get_UserView(self, request):
@@ -300,7 +340,7 @@ class Kiosk(ModelViewSet):
     def get_ModelID_By_DeviceID(self, request):
         print('--', request.data)
         try:
-            user_view_obj = ModelMaster.objects.filter(DeviceID=request.data.get('DeviceID'))
+            user_view_obj = Mo.objects.filter(DeviceID=request.data.get('DeviceID'))
             data = {'user_list', user_view_obj}
             print(data)
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
@@ -327,11 +367,12 @@ class Kiosk(ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def get_DeviceView(self, request):
-        print('--', request.data)
+        # print('--', request.data)
         try:
             device_view_obj = DeviceMaster.objects.filter(isactive=True)
             data = {'device_list', device_view_obj}
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of device', 'data': data}
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of device',
+                       'data': device_view_obj}
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -354,43 +395,43 @@ class Kiosk(ModelViewSet):
 
     # ADMIN SIDE
     @action(methods=['POST'], detail=False)
-    def del_ModelByID(self, request):
-        print('--', request.data)
-        try:
-            brand_view_obj = BrandMaster.objects.get(BrandID=request.data.get('BrandID'))
-            brand_view_obj.isactive= False
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Brand',
-                       }
-        except Exception as e:
-            print(str(e))
-            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                       'message': 'Error in fetching data'}
-        return Response(content)
-
-    # ADMIN SIDE
-    @action(methods=['POST'], detail=False)
     def get_ModelByID(self, request):
         print('--', request.data)
         try:
             model_view_obj = ModelMaster.objects.get(ModelID=request.data.get('ModelID'))
-            modeldtl_view_obj = ModelDTL.objects.get(ModelID=request.data.get('ModelID'))
+            modeldtl_view_obj = ModelDTL.objects.get(ModelID_id=request.data.get('ModelID'))
             data = {'ModelID': model_view_obj.ModelID, 'ModelName': model_view_obj.ModelName,
                     'BrandID': model_view_obj.BrandID, 'isactive': model_view_obj.isactive,
                     'ModelDTLID': modeldtl_view_obj.ModelDTLID, 'RAM': modeldtl_view_obj.RAM,
                     'Storage': modeldtl_view_obj.Storage, 'price': modeldtl_view_obj.price,
                     'back_camera1': modeldtl_view_obj.back_camera1, 'back_camera2': modeldtl_view_obj.back_camera2,
                     'back_camera3': modeldtl_view_obj.back_camera3, 'back_camera4': modeldtl_view_obj.back_camera4,
-                    'back_camera5': modeldtl_view_obj.back_camera5, 'front_camara1': modeldtl_view_obj.front_camara1,
-                    'front_camara2': modeldtl_view_obj.front_camara2, 'front_camara3': modeldtl_view_obj.front_camara3,
-                    'front_camara4': modeldtl_view_obj.front_camara4, 'screen_size': modeldtl_view_obj.screen_size,
-                    'SIM_type': modeldtl_view_obj.SIM_type, 'expandable_storage': modeldtl_view_obj.expandable_storage,
+                    'back_camera5': modeldtl_view_obj.back_camera5, 'front_camera1': modeldtl_view_obj.front_camara1,
+                    'front_camera2': modeldtl_view_obj.front_camara2, 'front_camera3': modeldtl_view_obj.front_camara3,
+                    'front_camera4': modeldtl_view_obj.front_camara4, 'screen_size': modeldtl_view_obj.screen_size,
+                    'sim_type': modeldtl_view_obj.SIM_type, 'expandable_storage': modeldtl_view_obj.expandable_storage,
                     'color1': modeldtl_view_obj.color1, 'color2': modeldtl_view_obj.color2,
                     'color3': modeldtl_view_obj.color3, 'color4': modeldtl_view_obj.color4,
                     'color5': modeldtl_view_obj.color5, 'color6': modeldtl_view_obj.color6,
                     'color7': modeldtl_view_obj.color7, 'processor': modeldtl_view_obj.processor,
-                    'osdtl': modeldtl_view_obj.osdtl, 'bdtl': modeldtl_view_obj.bdtl,
+                    'os_details': modeldtl_view_obj.osdtl, 'battery_details': modeldtl_view_obj.bdtl,
                     'fingerprint': modeldtl_view_obj.fingerprint, 'back_flashlight': modeldtl_view_obj.back_flashlight,
-                    'front_flashlight': modeldtl_view_obj.front_flashlight}
+                    'front_flashlight': modeldtl_view_obj.front_flashlight, 'cpu_details': modeldtl_view_obj.cpudtl}
+            bc_list = ['back_camera1', 'back_camera2', 'back_camera3', 'back_camera4', 'back_camera5']
+            fc_list = ['front_camera1', 'front_camera2', 'front_camera3', 'front_camera4']
+            bc_count = 0
+            fc_count = 0
+            for x in bc_list:
+                if data.get(x) is not None:
+                    bc_count += 1
+
+            for x in fc_list:
+                if data.get(x) is not None:
+                    fc_count += 1
+
+            data['bc_count'] = bc_count
+            data['fc_count'] = fc_count
+
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Model',
                        'data': data}
         except Exception as e:
@@ -469,12 +510,12 @@ class Kiosk(ModelViewSet):
         try:
             header_dic = request.data.get('HeaderDic')
             dtl_dic = request.data.get('DtlDic')
-            model_obj = ModelMaster.objects.get(header_dic.get('ModelID'))
+            model_obj = ModelMaster.objects.get(request.data.get('ModelID'))
             model_obj.ModelName = header_dic.get('ModelName')
             model_obj.BrandID = header_dic.get('BrandID')
             model_obj.save()
 
-            model_dtl_obj = ModelDTL.objects.get(dtl_dic.get('ModelDTLID'))
+            model_dtl_obj = ModelDTL.objects.get(request.data.get('ModelDTLID'))
             model_dtl_obj.RAM = dtl_dic.get('RAM')
             model_dtl_obj.Storage = dtl_dic.get('Storage')
             model_dtl_obj.price = dtl_dic.get('price')
@@ -522,7 +563,7 @@ class Kiosk(ModelViewSet):
             device_obj.DeviceAddress = request.data.get('DeviceAddress')
             device_obj.City = request.data.get('City')
             device_obj.State = request.data.get('State')
-            device_obj.DeviceMac = request.data('DeviceMac')
+            device_obj.DeviceMac = request.data.get('DeviceMac')
             device_obj.save()
 
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Brand Master Update'}
