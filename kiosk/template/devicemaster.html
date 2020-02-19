@@ -277,28 +277,34 @@
                 <div class="c-invoice">
                     <form class="c-card__body" method="POST" action="{% url 'devicemaster' %}">
                         {% csrf_token %}
+                        <input class="c-input" type="hidden" id="DeviceID" placeholder="" name="DeviceID"
+                                   required value="{{ data.DeviceID }}">
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Device Number</label>
                             <input class="c-input" type="text" id="devicenumber" placeholder="" name="devicenumber"
-                                   required>
+                                   required value="{{ data.DeviceNumber }}">
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Device Mac</label>
-                            <input class="c-input" type="text" id="devicemac" placeholder="" name="devicemac" required>
+                            <input class="c-input" type="text" id="devicemac" placeholder="" name="devicemac" required
+                                   value="{{ data.DeviceMac }}">
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">Device Address</label>
                             <input class="c-input" type="text" id="deviceaddress" placeholder="" name="deviceaddress"
+                                   value="{{ data.DeviceAddress }}"
                                    required>
                         </div>
 
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">City</label>
-                            <input class="c-input" type="text" id="city" placeholder="" name="city" required>
+                            <input class="c-input" type="text" id="city" placeholder="" name="city" required
+                                   value="{{ data.City }}">
                         </div>
                         <div class="c-field u-mb-small">
                             <label class="c-field__label">State</label>
                             <input class="c-input" type="text" id="state" placeholder="" name="state"
+                                   value="{{ data.State }}"
                                    required>
                         </div>
 
@@ -324,6 +330,9 @@
 <script>
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
             ga('create','UA-88739867-2','auto');ga('send','pageview')
+
+
+
 
 
 
