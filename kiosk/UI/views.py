@@ -274,3 +274,10 @@ def forgotpassword(request):
     else:
 
         return render(request, 'forgot-password.html', {})
+
+
+def del_model(request,model_id):
+    print('---')
+    r = Kiosk()
+    # res =
+    
