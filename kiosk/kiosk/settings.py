@@ -81,7 +81,7 @@ DATABASES = {
         'USER': 'kiosk1',
         'PASSWORD': '1234',
 
-        'HOST': 'localhost',
+        'HOST': '192.168.43.63',
         'PORT': '3306',
 
     }
