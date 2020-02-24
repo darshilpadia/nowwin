@@ -1,0 +1,259 @@
+{% load static %}
+<!doctype html>
+<html lang="en-us">
+
+<!-- Mirrored from dashboard.zawiastudio.com/demo/invoice.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Feb 2020 16:52:36 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Kiosk</title>
+    <meta name="description" content="Dashboard UI Kit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/main.min3661.css?v=2.0">
+</head>
+<body class="o-page">
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<div class="o-page__sidebar js-page-sidebar">
+    <div class="c-sidebar">
+        <a class="c-sidebar__brand" href="#">
+            <img class="c-sidebar__brand-img" src="{% static 'img/logo.png' %}" alt="Logo"> Dashboard
+        </a>
+
+        <h4 class="c-sidebar__title">Dashboards</h4>
+        <ul class="c-sidebar__list">
+
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'dashboard' %}">
+                    <i class="fa fa-home u-mr-xsmall"></i>Dashboard
+                </a>
+            </li>
+
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'brandview' %}">
+                    <i class="fa fa-apple u-mr-xsmall"></i>Brandview
+                </a>
+            </li>
+
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'modelview' %}">
+                    <i class="fa fa-tablet u-mr-xsmall"></i>Modelview
+                </a>
+            </li>
+
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'deviceview' %}">
+                    <i class="fa fa-laptop u-mr-xsmall"></i>Deviceview
+                </a>
+            </li>
+
+        </ul>
+
+    </div><!-- // .c-sidebar -->
+</div><!-- // .o-page__sidebar -->
+
+
+<!-- Mirrored from dashboard.zawiastudio.com/demo/projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Feb 2020 16:51:21 GMT -->
+<main class="o-page__content">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Projects | Dashboard UI Kit</title>
+        <meta name="description" content="Dashboard UI Kit">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600" rel="stylesheet">
+
+        <!-- Favicon -->
+        <link rel="apple-touch-icon" href="{% static 'apple-touch-icon.png' %}">
+        <!--        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">-->
+
+        <!-- Main Stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/main.min3661.css' %}">
+    </head>
+    <body>
+    <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+            href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+    <div class="c-toolbar u-mb-medium">
+        <h3 class="c-toolbar__title has-divider">Welcome </h3>
+        <h5 class="c-toolbar__meta u-mr-auto">Dashboard</h5>
+    </div>
+    <div class="container">
+
+        <div class="row u-mb-large">
+            <div class="col-sm-6 col-lg-3">
+                <div class="c-state">
+                    <h3 class="c-state__title">Total Brand</h3>
+                    <h4 class="c-state__number">{{ d_d.Brand_count }}</h4>
+                    <p class="c-state__status"></p>
+                    <span class="c-state__indicator">
+<!--                            <i class="fa fa-arrow-circle-o-down"></i>-->
+                        </span>
+                </div><!-- // c-state -->
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="c-state c-state--success">
+                    <h3 class="c-state__title">Total Models</h3>
+                    <h4 class="c-state__number">{{ d_d.Model_count }}</h4>
+                    <p class="c-state__status"></p>
+                    <span class="c-state__indicator">
+<!--                            <i class="fa fa-arrow-circle-o-up"></i>-->
+                        </span>
+                </div><!-- // c-state -->
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="c-state c-state--warning">
+                    <h3 class="c-state__title">Total Kiosk Devices</h3>
+                    <h4 class="c-state__number">{{ d_d.Device_count }}</h4>
+                    <p class="c-state__status"></p>
+                    <span class="c-state__indicator">
+<!--                            <i class="fa fa-arrow-circle-o-down"></i>-->
+                        </span>
+                </div><!-- // c-state -->
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+                <div class="c-state c-state--danger">
+                    <h3 class="c-state__title">Total Visited User</h3>
+                    <h4 class="c-state__number">{{ d_d.DeviceDTL_count }}</h4>
+                    <p class="c-state__status"></p>
+                    <span class="c-state__indicator">
+<!--                            <i class="fa fa-arrow-circle-o-up"></i>-->
+                        </span>
+                </div><!-- // c-state -->
+            </div>
+
+
+            <input type="hidden" id="bar_chart_label" value="{{ d_d.Label_list }}">
+            <input type="hidden" id="bar_chart_count" value="{{ d_d.Count_list }}">
+            <input type="hidden" id="pie_chart_label" value="{{ d_d.pie_label_list }}">
+            <input type="hidden" id="pie_chart_count" value="{{ d_d.pie_count_list }}">
+
+
+        </div><!-- // .row -->
+
+        <div class="col-xl-12">
+            <div class="c-graph-card" data-mh="secondary-graphs">
+                <div class="c-graph-card__content u-flex u-justify-between u-align-items-baseline">
+                    <h3 class="c-graph-card__title u-h4">Daily Interaction</h3>
+                    <!--<div class="u-text-right">-->
+                    <!--<h4 class="u-h1 u-mb-zero">552</h4>-->
+                    <!--<span class="u-color-success">+16.2%</span>-->
+                    <!--</div>-->
+                </div>
+
+                <div class="c-graph-card__chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <div class="u-flex u-justify-between u-ph-medium u-pv-small u-border-top">
+                    <p>
+                        <span class="u-text-mute u-text-xsmall u-mr-xsmall">BEST DAY</span>{{ d_d.best }}
+                    </p>
+                    <p>
+                        <span class="u-text-mute u-text-xsmall u-mr-xsmall">AVERAGE</span>{{ d_d.avg }}
+                    </p>
+                </div>
+
+                <div class="c-graph-card__footer">
+                    <div class="row u-align-items-center">
+
+                        <div class="col-9">
+                            <p class="u-text-mute u-text-uppercase u-mb-xsmall u-text-xsmall">This week
+                            </p>
+                            <!--<div class="c-progress c-progress&#45;&#45;medium c-progress&#45;&#45;info">-->
+                            <!--<div class="c-progress__bar" style="width:35%;"></div>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="col-3 u-text-right">
+                            <h4 class="u-h2">{{ d_d.this_week }}</h4>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-12">
+            <div class="c-graph-card" data-mh="secondary-graphs">
+                <div class="c-graph-card__content u-flex u-justify-between u-align-items-baseline">
+                    <h3 class="c-graph-card__title u-h4">This Week Model Performance </h3>
+                    <!--<div class="u-text-right">-->
+                    <!--<h4 class="u-h1 u-mb-zero">552</h4>-->
+                    <!--<span class="u-color-success">+16.2%</span>-->
+                    <!--</div>-->
+                </div>
+
+                <div class="c-graph-card__chart">
+                    <canvas id="myChart_pie"></canvas>
+                </div>
+
+                <!--<div class="u-flex u-justify-between u-ph-medium u-pv-small u-border-top">-->
+                    <!--<p>-->
+                        <!--<span class="u-text-mute u-text-xsmall u-mr-xsmall">BEST DAY</span>21-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<span class="u-text-mute u-text-xsmall u-mr-xsmall">AVERAGE</span>32-->
+                    <!--</p>-->
+                <!--</div>-->
+
+                <!--<div class="c-graph-card__footer">-->
+                    <!--<div class="row u-align-items-center">-->
+
+                        <!--<div class="col-9">-->
+                            <!--<p class="u-text-mute u-text-uppercase u-mb-xsmall u-text-xsmall">This Month-->
+                            <!--</p>-->
+                            <!--&lt;!&ndash;<div class="c-progress c-progress&#45;&#45;medium c-progress&#45;&#45;info">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<div class="c-progress__bar" style="width:35%;"></div>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--<div class="col-3 u-text-right">-->
+                            <!--<h4 class="u-h2">21</h4>-->
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+
+                <!--</div>-->
+            </div>
+        </div>
+    </div><!-- // .container -->
+    </body>
+</main>
+<!-- Main javascsript -->
+<script src="{% static 'js/main.min3661.js' %}"></script>
+<script src="{% static 'js/abcd.js' %}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-88739867-2','auto');ga('send','pageview')
+
+</script>
+<script src="../../www.google-analytics.com/analytics.js" async defer></script>
+</body>
+
+<!-- Mirrored from dashboard.zawiastudio.com/demo/projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 09 Feb 2020 16:51:23 GMT -->
+</html>

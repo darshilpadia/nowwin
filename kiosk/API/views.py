@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .serializers import *
 from .models import *
+from collections import Counter
+from datetime import datetime
 
 
 # Create your views here.
@@ -119,10 +121,14 @@ class Kiosk(ModelViewSet):
                 DeviceID=request.data('deviceid'),
                 ModelID=request.data('modelid'),
                 TotalScreenTime=request.data('total_screen_time'),
-                CameraClick=request.data('camera_click'),
+                Front_CameraClick=request.data('front_camera_click'),
+                Back_CameraClick=request.data('front_camera_click'),
+                ScreenSizeClick=request.data('front_camera_click'),
+                ColorClick=request.data('front_camera_click'),
                 RAMClick=request.data('ram_click'),
                 StorageClick=request.data('storage_click'),
                 OtherClick=request.data('other_click'),
+                InterActionDateTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
@@ -404,7 +410,7 @@ class Kiosk(ModelViewSet):
                 print(x.ModelID)
                 modeldtl_view_obj = ModelDTL.objects.get(ModelID_id=x.ModelID)
                 data = {'ModelID': x.ModelID, 'ModelName': x.ModelName,
-                         'isactive': x.isactive,
+                        'isactive': x.isactive,
                         'ModelDTLID': modeldtl_view_obj.ModelDTLID, 'RAM': modeldtl_view_obj.RAM,
                         'Storage': modeldtl_view_obj.Storage, 'price': modeldtl_view_obj.price,
                         'back_camera1': modeldtl_view_obj.back_camera1, 'back_camera2': modeldtl_view_obj.back_camera2,
@@ -552,8 +558,31 @@ class Kiosk(ModelViewSet):
             model_view_obj = ModelMaster.objects.filter(isactive=True).count()
             brand_view_ogject = BrandMaster.objects.filter().count()
             devicedtl_view_obj = DeviceDTL.objects.filter().count()
+            dashboard_chart_obj = SPM0dels.get_dashboard_chartdata()
+            print(dashboard_chart_obj)
+            chart_count_list = []
+            chart_label_list = []
+            chart_model_list = []
 
-            data = {'Brand_count': brand_view_ogject, 'Device_count': device_view_obj, 'Model_count': model_view_obj,'DeviceDTL_count':devicedtl_view_obj}
+            for x in dashboard_chart_obj:
+                chart_count_list.append(x[0])
+                chart_label_list.append(x[1])
+                chart_model_list.append(x[2])
+
+            temp = Counter(chart_model_list)
+            pie_chart_lable = []
+            pie_chart_count = []
+            print(temp)
+            for a, b in temp.items():
+                pie_chart_count.append(b)
+                pie_chart_lable.append(a)
+
+            data = {'Brand_count': brand_view_ogject, 'Device_count': device_view_obj, 'Model_count': model_view_obj,
+                    'DeviceDTL_count': devicedtl_view_obj, 'Count_list': chart_count_list,
+                    'Label_list': chart_label_list,
+                    'Model_list': chart_model_list, 'best': max(chart_count_list),
+                    'avg': (sum(chart_count_list) / len(chart_count_list)), 'this_week': sum(chart_count_list),
+                    'pie_label_list': pie_chart_lable, 'pie_count_list': pie_chart_count}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of dashbord',
                        'data': data}
         except Exception as e:
@@ -666,10 +695,15 @@ class Kiosk(ModelViewSet):
                     'Password': login_obj.Password, 'IsActive': login_obj.IsActive, 'Token': token}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Login Success', 'data': data}
 
+        except UserMaster.DoesNotExist as e:
+
+            content = {'result': 'Forbidden', 'status': status.HTTP_200_OK, 'message': 'No user'}
+
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
+        print(content)
         return Response(content)
 
     @action(methods=['POST'], detail=False)

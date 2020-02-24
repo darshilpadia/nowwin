@@ -29,6 +29,7 @@ urlpatterns = [
 
     path('api/kiosk/', include('API.urls')),
     url(r'^login$', login, name='login'),
+    url(r'^$', login, name='login'),
     url(r'^brandmaster$', brandmaster, name='brandmaster'),
     url(r'^brandmaster/(?P<brand_id>\d+)/$', brandmasterbyid, name='brandmasterupdate'),
     url(r'^devicemaster$', devicemaster, name='devicemaster'),
