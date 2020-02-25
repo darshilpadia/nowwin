@@ -29,13 +29,14 @@ urlpatterns = [
 
     path('api/kiosk/', include('API.urls')),
     url(r'^login$', login, name='login'),
+    url(r'^$', login, name='login'),
     url(r'^brandmaster$', brandmaster, name='brandmaster'),
     url(r'^brandmaster/(?P<brand_id>\d+)/$', brandmasterbyid, name='brandmasterupdate'),
     url(r'^devicemaster$', devicemaster, name='devicemaster'),
     url(r'^brandmaster/(?P<brand_id>\d+)/$', brandmasterbyid, name='brandmasterupdate'),
     url(r'^modelmaster/(?P<model_id>\d+)/$', modelmasterbyid, name='modelmasterupdate'),
     url(r'^devicemaster/(?P<device_id>\d+)/$', devicemasterbyid, name='devicemasterupdate'),
-
+    url(r'^modelmaster-del/(?P<model_id1>\d+)/$', del_modelmasterbyid, name='modelmasterdelete'),
     url(r'^modelmaster$', modelmaster, name='modelmaster'),
     url(r'^brandview$', brandview, name='brandview'),
     url(r'^modelview$', modelview, name='modelview'),
