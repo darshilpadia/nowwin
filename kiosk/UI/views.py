@@ -43,7 +43,10 @@ def brandmaster(request):
         if request.POST.get('brandid') is not None:
             request.data = {'BrandID': request.POST.get('brandid'), 'BrandName': request.POST.get('brandname')}
             r = Kiosk()
-            res = r.update_BrandMaster(request)
+            if int(request.data.get('BrandID')) > 0:
+                res = r.update_BrandMaster(request)
+            else:
+                res = r.ins_BrandMaster(request)
             if res.data.get('result') == 'Success':
                 response = redirect('brandview', permanent=True)
             return response
