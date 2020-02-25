@@ -36,7 +36,7 @@ urlpatterns = [
     url(r'^brandmaster/(?P<brand_id>\d+)/$', brandmasterbyid, name='brandmasterupdate'),
     url(r'^modelmaster/(?P<model_id>\d+)/$', modelmasterbyid, name='modelmasterupdate'),
     url(r'^devicemaster/(?P<device_id>\d+)/$', devicemasterbyid, name='devicemasterupdate'),
-
+    url(r'^modelmaster-del/(?P<model_id1>\d+)/$', del_modelmasterbyid, name='modelmasterdelete'),
     url(r'^modelmaster$', modelmaster, name='modelmaster'),
     url(r'^brandview$', brandview, name='brandview'),
     url(r'^modelview$', modelview, name='modelview'),

@@ -165,7 +165,7 @@ def modelmaster(request):
                         'front_flashlight': True if request.POST.get('frontflash') == 'on' else False,
                         'ModelID': request.POST.get('ModelID'),
                         'storage': request.POST.get('storage'),
-                        'processor': request.POST.get('processor')
+                        'processor': request.POST.get('processor'), 'modeldtlid': request.POST.get('modeldtlid')
 
                         }
         r = Kiosk()
@@ -230,6 +230,7 @@ def modelmasterbyid(request, model_id):
         print(res)
         res_brand = r.get_BrandView(request)
         if res.data.get('result') == 'Success':
+            print(res.data.get('data'))
             form_data = res.data.get('data')
             data = res_brand.data.get('data')
             return render(request, 'modelmaster.html', {'d': data, 'form_data': form_data})
@@ -289,7 +290,18 @@ def forgotpassword(request):
         return render(request, 'forgot-password.html', {})
 
 
-def del_model(request, model_id):
-    print('---')
-    r = Kiosk()
-    # res =
+def del_modelmasterbyid(request, model_id1):
+    print('------', request.POST)
+    print('------*************************************model del', request)
+    if request.method == "GET":
+        request.data = {'ModelID': model_id1}
+        r = Kiosk()
+        res = r.del_ModelMaster(request)
+        print(res)
+        if res.data.get('result') == 'Success':
+            data = res.data.get('data')
+            response = redirect('modelview', permanent=True)
+            return response
+    else:
+        response = redirect('brandview', permanent=True)
+        return response

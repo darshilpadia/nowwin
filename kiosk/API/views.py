@@ -13,7 +13,16 @@ from datetime import datetime
 # Create your views here.
 
 
+def validate_user(func):
+    def inner(**kwargs):
+        print('called')
+        u = Utils()
+        # u.VerifyUser()
+        return func
+    return inner
+
 class Utils():
+
     def VerifyUser(self, userid, token):
         try:
             verify_obj = UserActiveLogon.objects.get(UserID=userid, Token=token)
@@ -62,7 +71,6 @@ class Kiosk(ModelViewSet):
 
     # queryset1 = ModelMaster.objects.all()
     # serializer_class1 = ModelMasterSerializer
-
     # KIOSK
     @action(methods=['POST'], detail=False)
     def getmyid(self, request):
@@ -116,19 +124,20 @@ class Kiosk(ModelViewSet):
     @action(methods=['POST'], detail=False)
     def ins_DeviceDTL(self, request):
         print('--', request.data)
+        print('--', type(request.data))
         try:
             ins_obj = DeviceDTL.objects.create(
-                DeviceID=request.data('deviceid'),
-                ModelID=request.data('modelid'),
-                TotalScreenTime=request.data('total_screen_time'),
-                Front_CameraClick=request.data('front_camera_click'),
-                Back_CameraClick=request.data('front_camera_click'),
-                ScreenSizeClick=request.data('front_camera_click'),
-                ColorClick=request.data('front_camera_click'),
-                RAMClick=request.data('ram_click'),
-                StorageClick=request.data('storage_click'),
-                OtherClick=request.data('other_click'),
-                InterActionDateTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                DeviceID_id=request.data.get('deviceid'),
+                ModelID_id=request.data.get('modelid'),
+                TotalScreenTime=request.data.get('total_screen_time'),
+                Front_CameraClick=request.data.get('front_camera_click'),
+                Back_CameraClick=request.data.get('back_camera_click'),
+                ScreenSizeClick=request.data.get('screen_size_click'),
+                ColorClick=request.data.get('color_click'),
+                RAMClick=request.data.get('ram_click'),
+                StorageClick=request.data.get('storage_click'),
+                OtherClick=request.data.get('other_click')#,
+                # InterActionDateTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
@@ -551,6 +560,7 @@ class Kiosk(ModelViewSet):
         return Response(content)
 
     @action(methods=['POST'], detail=False)
+    # @validate_user
     def get_DashbordData(self, request):
         # print('--', request.data)
         try:
@@ -594,42 +604,41 @@ class Kiosk(ModelViewSet):
     def update_Model(self, request):
         print('--', request.data)
         try:
-            header_dic = request.data.get('HeaderDic')
-            dtl_dic = request.data.get('DtlDic')
+
             model_obj = ModelMaster.objects.get(request.data.get('ModelID'))
-            model_obj.ModelName = header_dic.get('ModelName')
-            model_obj.BrandID = header_dic.get('BrandID')
+            model_obj.ModelName = request.data.get('modelname')
+            model_obj.BrandID = request.data.get('brandid')
             model_obj.save()
 
             model_dtl_obj = ModelDTL.objects.get(request.data.get('ModelDTLID'))
-            model_dtl_obj.RAM = dtl_dic.get('RAM')
-            model_dtl_obj.Storage = dtl_dic.get('Storage')
-            model_dtl_obj.price = dtl_dic.get('price')
-            model_dtl_obj.back_camera1 = dtl_dic.get('back_camera1')
-            model_dtl_obj.back_camera2 = dtl_dic.get('back_camera2')
-            model_dtl_obj.back_camera3 = dtl_dic.get('back_camera3')
-            model_dtl_obj.back_camera4 = dtl_dic.get('back_camera4')
-            model_dtl_obj.back_camera5 = dtl_dic.get('back_camera5')
-            model_dtl_obj.front_camara1 = dtl_dic.get('front_camara1')
-            model_dtl_obj.front_camara2 = dtl_dic.get('front_camara2')
-            model_dtl_obj.front_camara3 = dtl_dic.get('front_camara3')
-            model_dtl_obj.front_camara4 = dtl_dic.get('front_camara4')
-            model_dtl_obj.screen_size = dtl_dic.get('screen_size')
-            model_dtl_obj.SIM_type = dtl_dic.get('expandable_storage')
-            model_dtl_obj.color1 = dtl_dic.get('color1')
-            model_dtl_obj.color2 = dtl_dic.get('color2')
-            model_dtl_obj.color3 = dtl_dic.get('color3')
-            model_dtl_obj.color4 = dtl_dic.get('color4')
-            model_dtl_obj.color5 = dtl_dic.get('color5')
-            model_dtl_obj.color6 = dtl_dic.get('color6')
-            model_dtl_obj.color7 = dtl_dic.get('color7')
-            model_dtl_obj.processor = dtl_dic.get('processor')
-            model_dtl_obj.osdtl = dtl_dic.get('osdtl')
-            model_dtl_obj.cpudtl = dtl_dic.get('cpudtl')
-            model_dtl_obj.bdtl = dtl_dic.get('bdtl')
-            model_dtl_obj.fingerprint = dtl_dic.get('fingerprint')
-            model_dtl_obj.back_flashlight = dtl_dic.get('back_flashlight')
-            model_dtl_obj.front_flashlight = dtl_dic.get('front_flashlight')
+            model_dtl_obj.RAM = request.data.get('RAM')
+            model_dtl_obj.Storage = request.data.get('Storage')
+            model_dtl_obj.price = request.data.get('price')
+            model_dtl_obj.back_camera1 = request.data.get('back_camera1')
+            model_dtl_obj.back_camera2 = request.data.get('back_camera2')
+            model_dtl_obj.back_camera3 = request.data.get('back_camera3')
+            model_dtl_obj.back_camera4 = request.data.get('back_camera4')
+            model_dtl_obj.back_camera5 = request.data.get('back_camera5')
+            model_dtl_obj.front_camara1 = request.data.get('front_camara1')
+            model_dtl_obj.front_camara2 = request.data.get('front_camara2')
+            model_dtl_obj.front_camara3 = request.data.get('front_camara3')
+            model_dtl_obj.front_camara4 = request.data.get('front_camara4')
+            model_dtl_obj.screen_size = request.data.get('screen_size')
+            model_dtl_obj.SIM_type = request.data.get('expandable_storage')
+            model_dtl_obj.color1 = request.data.get('color1')
+            model_dtl_obj.color2 = request.data.get('color2')
+            model_dtl_obj.color3 = request.data.get('color3')
+            model_dtl_obj.color4 = request.data.get('color4')
+            model_dtl_obj.color5 = request.data.get('color5')
+            model_dtl_obj.color6 = request.data.get('color6')
+            model_dtl_obj.color7 = request.data.get('color7')
+            model_dtl_obj.processor = request.data.get('processor')
+            model_dtl_obj.osdtl = request.data.get('osdtl')
+            model_dtl_obj.cpudtl = request.data.get('cpudtl')
+            model_dtl_obj.bdtl = request.data.get('bdtl')
+            model_dtl_obj.fingerprint = request.data.get('fingerprint')
+            model_dtl_obj.back_flashlight = request.data.get('back_flashlight')
+            model_dtl_obj.front_flashlight = request.data.get('front_flashlight')
             model_dtl_obj.save()
 
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Brand Master Update'}
@@ -722,3 +731,19 @@ class Kiosk(ModelViewSet):
                        'message': 'Error in fetching data'}
 
         return Response(content)
+
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def del_ModelMaster(self, request):
+        print('--', request.data)
+        try:
+            model_obj = ModelMaster.objects.get(ModelID=request.data.get('ModelID'))
+            model_obj.isactive = False
+            model_obj.save()
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully deleted', }
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
