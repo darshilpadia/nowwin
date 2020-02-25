@@ -200,7 +200,7 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             ins_obj = BrandMaster.objects.create(
-                BrandName=request.data.get('brand_name')
+                BrandName=request.data.get('BrandName')
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
         except Exception as e:
@@ -453,6 +453,10 @@ class Kiosk(ModelViewSet):
 
                 data['bc_count'] = bc_count
                 data['fc_count'] = fc_count
+                # bc_camera_list = []
+                
+
+
                 datalist.append(data)
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Model',
                        'data': datalist}
