@@ -19,7 +19,9 @@ def validate_user(func):
         u = Utils()
         # u.VerifyUser()
         return func
+
     return inner
+
 
 class Utils():
 
@@ -136,7 +138,7 @@ class Kiosk(ModelViewSet):
                 ColorClick=request.data.get('color_click'),
                 RAMClick=request.data.get('ram_click'),
                 StorageClick=request.data.get('storage_click'),
-                OtherClick=request.data.get('other_click')#,
+                OtherClick=request.data.get('other_click')  # ,
                 # InterActionDateTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             )
@@ -443,19 +445,22 @@ class Kiosk(ModelViewSet):
                 fc_list = ['front_camera1', 'front_camera2', 'front_camera3', 'front_camera4']
                 bc_count = 0
                 fc_count = 0
+                bc_camera_list = []
+                fc_camera_list = []
                 for x in bc_list:
+                    bc_camera_list.append(data.get(x))
                     if data.get(x) is not None:
                         bc_count += 1
 
                 for x in fc_list:
+                    fc_camera_list.append(data.get(x))
                     if data.get(x) is not None:
                         fc_count += 1
 
                 data['bc_count'] = bc_count
                 data['fc_count'] = fc_count
-                # bc_camera_list = []
-                
-
+                data['bc_camera_list'] = bc_camera_list
+                data['fc_camera_list'] = fc_camera_list
 
                 datalist.append(data)
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Model',
@@ -750,4 +755,3 @@ class Kiosk(ModelViewSet):
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
         return Response(content)
-
