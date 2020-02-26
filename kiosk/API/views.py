@@ -6,12 +6,28 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .serializers import *
 from .models import *
+from collections import Counter
+from datetime import datetime
+from io import StringIO
+import xlwt
+from django.http import HttpResponse
 
 
 # Create your views here.
 
 
+def validate_user(func):
+    def inner(**kwargs):
+        print('called')
+        u = Utils()
+        # u.VerifyUser()
+        return func
+
+    return inner
+
+
 class Utils():
+
     def VerifyUser(self, userid, token):
         try:
             verify_obj = UserActiveLogon.objects.get(UserID=userid, Token=token)
@@ -60,7 +76,6 @@ class Kiosk(ModelViewSet):
 
     # queryset1 = ModelMaster.objects.all()
     # serializer_class1 = ModelMasterSerializer
-
     # KIOSK
     @action(methods=['POST'], detail=False)
     def getmyid(self, request):
@@ -114,15 +129,20 @@ class Kiosk(ModelViewSet):
     @action(methods=['POST'], detail=False)
     def ins_DeviceDTL(self, request):
         print('--', request.data)
+        print('--', type(request.data))
         try:
             ins_obj = DeviceDTL.objects.create(
-                DeviceID=request.data('deviceid'),
-                ModelID=request.data('modelid'),
-                TotalScreenTime=request.data('total_screen_time'),
-                CameraClick=request.data('camera_click'),
-                RAMClick=request.data('ram_click'),
-                StorageClick=request.data('storage_click'),
-                OtherClick=request.data('other_click'),
+                DeviceID_id=request.data.get('deviceid'),
+                ModelID_id=request.data.get('modelid'),
+                TotalScreenTime=request.data.get('total_screen_time'),
+                Front_CameraClick=request.data.get('front_camera_click'),
+                Back_CameraClick=request.data.get('back_camera_click'),
+                ScreenSizeClick=request.data.get('screen_size_click'),
+                ColorClick=request.data.get('color_click'),
+                RAMClick=request.data.get('ram_click'),
+                StorageClick=request.data.get('storage_click'),
+                OtherClick=request.data.get('other_click')  # ,
+                # InterActionDateTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
@@ -185,7 +205,7 @@ class Kiosk(ModelViewSet):
         print('--', request.data)
         try:
             ins_obj = BrandMaster.objects.create(
-                BrandName=request.data.get('brand_name')
+                BrandName=request.data.get('BrandName')
             )
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully added', }
         except Exception as e:
@@ -336,20 +356,20 @@ class Kiosk(ModelViewSet):
 
         return Response(content)
 
-    @action(methods=['POST'], detail=False)
-    def get_ModelID_By_DeviceID(self, request):
-        print('--', request.data)
-        try:
-            user_view_obj = Mo.objects.filter(DeviceID=request.data.get('DeviceID'))
-            data = {'user_list', user_view_obj}
-            print(data)
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
-        except Exception as e:
-            print(str(e))
-            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                       'message': 'Error in fetching data'}
-
-        return Response(content)
+    # @action(methods=['POST'], detail=False)
+    # def get_ModelID_By_DeviceID(self, request):
+    #     print('--', request.data)
+    #     try:
+    #         user_view_obj = Mo.objects.filter(DeviceID=request.data.get('DeviceID'))
+    #         data = {'user_list', user_view_obj}
+    #         print(data)
+    #         content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
+    #     except Exception as e:
+    #         print(str(e))
+    #         content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+    #                    'message': 'Error in fetching data'}
+    #
+    #     return Response(content)
 
     @action(methods=['POST'], detail=False)
     def get_UserView(self, request):
@@ -404,7 +424,7 @@ class Kiosk(ModelViewSet):
                 print(x.ModelID)
                 modeldtl_view_obj = ModelDTL.objects.get(ModelID_id=x.ModelID)
                 data = {'ModelID': x.ModelID, 'ModelName': x.ModelName,
-                         'isactive': x.isactive,
+                        'isactive': x.isactive,
                         'ModelDTLID': modeldtl_view_obj.ModelDTLID, 'RAM': modeldtl_view_obj.RAM,
                         'Storage': modeldtl_view_obj.Storage, 'price': modeldtl_view_obj.price,
                         'back_camera1': modeldtl_view_obj.back_camera1, 'back_camera2': modeldtl_view_obj.back_camera2,
@@ -428,16 +448,24 @@ class Kiosk(ModelViewSet):
                 fc_list = ['front_camera1', 'front_camera2', 'front_camera3', 'front_camera4']
                 bc_count = 0
                 fc_count = 0
+                bc_camera_list = []
+                fc_camera_list = []
                 for x in bc_list:
+                    bc_camera_list.append(data.get(x))
                     if data.get(x) is not None:
                         bc_count += 1
 
                 for x in fc_list:
+                    fc_camera_list.append(data.get(x))
                     if data.get(x) is not None:
                         fc_count += 1
 
                 data['bc_count'] = bc_count
                 data['fc_count'] = fc_count
+
+                data['bc_camera_list'] = bc_camera_list
+                data['fc_camera_list'] = fc_camera_list
+
                 datalist.append(data)
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Model',
                        'data': datalist}
@@ -545,6 +573,7 @@ class Kiosk(ModelViewSet):
         return Response(content)
 
     @action(methods=['POST'], detail=False)
+    # @validate_user
     def get_DashbordData(self, request):
         # print('--', request.data)
         try:
@@ -552,8 +581,41 @@ class Kiosk(ModelViewSet):
             model_view_obj = ModelMaster.objects.filter(isactive=True).count()
             brand_view_ogject = BrandMaster.objects.filter().count()
             devicedtl_view_obj = DeviceDTL.objects.filter().count()
+            dashboard_chart_obj = SPM0dels.get_dashboard_chartdata()
+            print(dashboard_chart_obj)
+            chart_count_list = []
+            chart_label_list = []
+            chart_model_list = []
 
-            data = {'Brand_count': brand_view_ogject, 'Device_count': device_view_obj, 'Model_count': model_view_obj,'DeviceDTL_count':devicedtl_view_obj}
+            for x in dashboard_chart_obj:
+                chart_count_list.append(x[0])
+                chart_label_list.append(x[1])
+                chart_model_list.append(x[2])
+
+            temp = Counter(chart_model_list)
+            pie_chart_lable = []
+            pie_chart_count = []
+            print(temp)
+            for a, b in temp.items():
+                pie_chart_count.append(b)
+                pie_chart_lable.append(a)
+            if len(chart_count_list) > 0:
+                best = max(chart_count_list)
+                avg = sum(chart_count_list) / len(chart_count_list)
+                this_week = sum(chart_count_list)
+            else:
+                best = None
+                avg = None
+                this_week = None
+
+            data = {'Brand_count': brand_view_ogject, 'Device_count': device_view_obj, 'Model_count': model_view_obj,
+                    'DeviceDTL_count': devicedtl_view_obj, 'Count_list': chart_count_list,
+                    'Label_list': chart_label_list,
+                    'Model_list': chart_model_list,
+                    'best': best,
+                    'avg': avg,
+                    'this_week': this_week,
+                    'pie_label_list': pie_chart_lable, 'pie_count_list': pie_chart_count}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of dashbord',
                        'data': data}
         except Exception as e:
@@ -565,42 +627,41 @@ class Kiosk(ModelViewSet):
     def update_Model(self, request):
         print('--', request.data)
         try:
-            header_dic = request.data.get('HeaderDic')
-            dtl_dic = request.data.get('DtlDic')
+
             model_obj = ModelMaster.objects.get(request.data.get('ModelID'))
-            model_obj.ModelName = header_dic.get('ModelName')
-            model_obj.BrandID = header_dic.get('BrandID')
+            model_obj.ModelName = request.data.get('modelname')
+            model_obj.BrandID = request.data.get('brandid')
             model_obj.save()
 
             model_dtl_obj = ModelDTL.objects.get(request.data.get('ModelDTLID'))
-            model_dtl_obj.RAM = dtl_dic.get('RAM')
-            model_dtl_obj.Storage = dtl_dic.get('Storage')
-            model_dtl_obj.price = dtl_dic.get('price')
-            model_dtl_obj.back_camera1 = dtl_dic.get('back_camera1')
-            model_dtl_obj.back_camera2 = dtl_dic.get('back_camera2')
-            model_dtl_obj.back_camera3 = dtl_dic.get('back_camera3')
-            model_dtl_obj.back_camera4 = dtl_dic.get('back_camera4')
-            model_dtl_obj.back_camera5 = dtl_dic.get('back_camera5')
-            model_dtl_obj.front_camara1 = dtl_dic.get('front_camara1')
-            model_dtl_obj.front_camara2 = dtl_dic.get('front_camara2')
-            model_dtl_obj.front_camara3 = dtl_dic.get('front_camara3')
-            model_dtl_obj.front_camara4 = dtl_dic.get('front_camara4')
-            model_dtl_obj.screen_size = dtl_dic.get('screen_size')
-            model_dtl_obj.SIM_type = dtl_dic.get('expandable_storage')
-            model_dtl_obj.color1 = dtl_dic.get('color1')
-            model_dtl_obj.color2 = dtl_dic.get('color2')
-            model_dtl_obj.color3 = dtl_dic.get('color3')
-            model_dtl_obj.color4 = dtl_dic.get('color4')
-            model_dtl_obj.color5 = dtl_dic.get('color5')
-            model_dtl_obj.color6 = dtl_dic.get('color6')
-            model_dtl_obj.color7 = dtl_dic.get('color7')
-            model_dtl_obj.processor = dtl_dic.get('processor')
-            model_dtl_obj.osdtl = dtl_dic.get('osdtl')
-            model_dtl_obj.cpudtl = dtl_dic.get('cpudtl')
-            model_dtl_obj.bdtl = dtl_dic.get('bdtl')
-            model_dtl_obj.fingerprint = dtl_dic.get('fingerprint')
-            model_dtl_obj.back_flashlight = dtl_dic.get('back_flashlight')
-            model_dtl_obj.front_flashlight = dtl_dic.get('front_flashlight')
+            model_dtl_obj.RAM = request.data.get('RAM')
+            model_dtl_obj.Storage = request.data.get('Storage')
+            model_dtl_obj.price = request.data.get('price')
+            model_dtl_obj.back_camera1 = request.data.get('back_camera1')
+            model_dtl_obj.back_camera2 = request.data.get('back_camera2')
+            model_dtl_obj.back_camera3 = request.data.get('back_camera3')
+            model_dtl_obj.back_camera4 = request.data.get('back_camera4')
+            model_dtl_obj.back_camera5 = request.data.get('back_camera5')
+            model_dtl_obj.front_camara1 = request.data.get('front_camara1')
+            model_dtl_obj.front_camara2 = request.data.get('front_camara2')
+            model_dtl_obj.front_camara3 = request.data.get('front_camara3')
+            model_dtl_obj.front_camara4 = request.data.get('front_camara4')
+            model_dtl_obj.screen_size = request.data.get('screen_size')
+            model_dtl_obj.SIM_type = request.data.get('expandable_storage')
+            model_dtl_obj.color1 = request.data.get('color1')
+            model_dtl_obj.color2 = request.data.get('color2')
+            model_dtl_obj.color3 = request.data.get('color3')
+            model_dtl_obj.color4 = request.data.get('color4')
+            model_dtl_obj.color5 = request.data.get('color5')
+            model_dtl_obj.color6 = request.data.get('color6')
+            model_dtl_obj.color7 = request.data.get('color7')
+            model_dtl_obj.processor = request.data.get('processor')
+            model_dtl_obj.osdtl = request.data.get('osdtl')
+            model_dtl_obj.cpudtl = request.data.get('cpudtl')
+            model_dtl_obj.bdtl = request.data.get('bdtl')
+            model_dtl_obj.fingerprint = request.data.get('fingerprint')
+            model_dtl_obj.back_flashlight = request.data.get('back_flashlight')
+            model_dtl_obj.front_flashlight = request.data.get('front_flashlight')
             model_dtl_obj.save()
 
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Brand Master Update'}
@@ -666,10 +727,15 @@ class Kiosk(ModelViewSet):
                     'Password': login_obj.Password, 'IsActive': login_obj.IsActive, 'Token': token}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Login Success', 'data': data}
 
+        except UserMaster.DoesNotExist as e:
+
+            content = {'result': 'Forbidden', 'status': status.HTTP_200_OK, 'message': 'No user'}
+
         except Exception as e:
             print(str(e))
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
+        print(content)
         return Response(content)
 
     @action(methods=['POST'], detail=False)
@@ -688,3 +754,72 @@ class Kiosk(ModelViewSet):
                        'message': 'Error in fetching data'}
 
         return Response(content)
+
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def del_ModelMaster(self, request):
+        print('--', request.data)
+        try:
+            model_obj = ModelMaster.objects.get(ModelID=request.data.get('ModelID'))
+            model_obj.isactive = False
+            model_obj.save()
+            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'succesfully deleted', }
+        except Exception as e:
+            print(str(e))
+            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                       'message': 'Error in fetching data'}
+        return Response(content)
+
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def get_general_excel(self, request):
+        response = HttpResponse(content_type='application/ms-excel')
+
+        # decide file name
+        response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
+
+        # creating workbook
+        wb = xlwt.Workbook(encoding='utf-8')
+
+        # adding sheet
+        ws = wb.add_sheet("sheet1")
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        # headers are bold
+        font_style.font.bold = True
+
+        # column header names, you can use your own headers here
+        columns = ['Brand Name', 'Model Name', 'Date', 'Total Visitors', 'Back Camera Click', 'Front Camera Click',
+                   'Ram Click',
+                   'Storage Click', 'Screen Size Click', 'Other Click']
+
+        # write column headers in sheet
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        # Sheet body, remaining rows
+        font_style = xlwt.XFStyle()
+
+        # ws.write(row_num + 1, 0, 'vishal', font_style)
+        # get your data, from database or from a text file...
+        data = SPM0dels.get_general_report()
+        print(data)
+        for x in data:
+            row_num = row_num + 1
+            ws.write(row_num, 0, x[3], font_style)
+            ws.write(row_num, 1, x[2], font_style)
+            ws.write(row_num, 2, x[1], font_style)
+            ws.write(row_num, 3, x[0], font_style)
+            ws.write(row_num, 4, x[4], font_style)
+            ws.write(row_num, 5, x[8], font_style)
+            ws.write(row_num, 6, x[5], font_style)
+            ws.write(row_num, 7, x[6], font_style)
+            ws.write(row_num, 8, x[9], font_style)
+            ws.write(row_num, 9, x[7], font_style)
+
+
+        wb.save(response)
+        return response

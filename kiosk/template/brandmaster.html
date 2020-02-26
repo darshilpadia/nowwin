@@ -27,42 +27,48 @@
 <![endif]-->
 
 <div class="o-page__sidebar js-page-sidebar">
-            <div class="c-sidebar">
-                <a class="c-sidebar__brand" href="#">
-                    <img class="c-sidebar__brand-img" src="{% static 'img/logo.png' %}" alt="Logo"> Dashboard
+    <div class="c-sidebar">
+        <a class="c-sidebar__brand" href="#">
+            <img class="c-sidebar__brand-img" src="{% static 'img/logo.png' %}" alt="Logo"> Dashboard
+        </a>
+
+        <h4 class="c-sidebar__title">Dashboards</h4>
+        <ul class="c-sidebar__list">
+
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'dashboard' %}">
+                    <i class="fa fa-home u-mr-xsmall"></i>Dashboard
                 </a>
+            </li>
 
-                <h4 class="c-sidebar__title">Dashboards</h4>
-                <ul class="c-sidebar__list">
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'brandview' %}">
+                    <i class="fa fa-apple u-mr-xsmall"></i>Brandview
+                </a>
+            </li>
 
-                    <li class="c-sidebar__item">
-                        <a class="c-sidebar__link" href="home-overview.html">
-                            <i class="fa fa-home u-mr-xsmall"></i>Dashboard
-                        </a>
-                    </li>
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'modelview' %}">
+                    <i class="fa fa-tablet u-mr-xsmall"></i>Modelview
+                </a>
+            </li>
 
-                    <li class="c-sidebar__item">
-                        <a class="c-sidebar__link" href="{% url 'brandview' %}">
-                            <i class="fa fa-apple u-mr-xsmall"></i>Brandview
-                        </a>
-                    </li>
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'deviceview' %}">
+                    <i class="fa fa-laptop u-mr-xsmall"></i>Deviceview
+                </a>
+            </li>
 
-                    <li class="c-sidebar__item">
-                        <a class="c-sidebar__link" href="{% url 'modelview' %}">
-                            <i class="fa fa-tablet u-mr-xsmall"></i>Modelview
-                        </a>
-                    </li>
+            <li class="c-sidebar__item">
+                <a class="c-sidebar__link" href="{% url 'reports' %}">
+                    <i class="fa fa-file u-mr-xsmall"></i>reports
+                </a>
+            </li>
 
-                    <li class="c-sidebar__item">
-                        <a class="c-sidebar__link"  href="{% url 'deviceview' %}">
-                            <i class="fa fa-laptop u-mr-xsmall"></i>Deviceview
-                        </a>
-                    </li>
+        </ul>
 
-                </ul>
-
-            </div><!-- // .c-sidebar -->
-        </div><!-- // .o-page__sidebar -->
+    </div><!-- // .c-sidebar -->
+</div><!-- // .o-page__sidebar -->
 
 <main class="o-page__content">
     <header class="c-navbar u-mb-medium">
@@ -86,8 +92,10 @@
                         {% csrf_token %}
                         <div class="c-field u-mb-small">
                             <label class="c-field__label" for="input1">Brand Name</label>
-                            <input class="c-input" type="text" id="brandname" placeholder="" name="brandname" value="{{ data.BrandName }}" required>
-                            <input class="c-input" type="hidden" id="brandid" placeholder="" name="brandid" value="{{ data.BrandID }}" required>
+                            <input class="c-input" type="text" id="brandname" placeholder="" name="brandname"
+                                   value="{{ data.BrandName }}" required>
+                            <input class="c-input" type="hidden" id="brandid" placeholder="" name="brandid"
+                                   value="{{ data.BrandID }}" required>
                         </div>
 
                         <button class="c-btn c-btn--info c-btn--fullwidth" type="submit">Submit</button>
@@ -106,6 +114,7 @@
 <script>
             window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
             ga('create','UA-88739867-2','auto');ga('send','pageview')
+
 
 </script>
 <script src="../../www.google-analytics.com/analytics.js" async defer></script>
