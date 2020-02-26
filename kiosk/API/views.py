@@ -19,7 +19,9 @@ def validate_user(func):
         u = Utils()
         # u.VerifyUser()
         return func
+
     return inner
+
 
 class Utils():
 
@@ -136,7 +138,7 @@ class Kiosk(ModelViewSet):
                 ColorClick=request.data.get('color_click'),
                 RAMClick=request.data.get('ram_click'),
                 StorageClick=request.data.get('storage_click'),
-                OtherClick=request.data.get('other_click')#,
+                OtherClick=request.data.get('other_click')  # ,
                 # InterActionDateTime=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
             )
@@ -351,20 +353,20 @@ class Kiosk(ModelViewSet):
 
         return Response(content)
 
-    @action(methods=['POST'], detail=False)
-    def get_ModelID_By_DeviceID(self, request):
-        print('--', request.data)
-        try:
-            user_view_obj = Mo.objects.filter(DeviceID=request.data.get('DeviceID'))
-            data = {'user_list', user_view_obj}
-            print(data)
-            content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
-        except Exception as e:
-            print(str(e))
-            content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                       'message': 'Error in fetching data'}
-
-        return Response(content)
+    # @action(methods=['POST'], detail=False)
+    # def get_ModelID_By_DeviceID(self, request):
+    #     print('--', request.data)
+    #     try:
+    #         user_view_obj = Mo.objects.filter(DeviceID=request.data.get('DeviceID'))
+    #         data = {'user_list', user_view_obj}
+    #         print(data)
+    #         content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'List of User', 'data': data}
+    #     except Exception as e:
+    #         print(str(e))
+    #         content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
+    #                    'message': 'Error in fetching data'}
+    #
+    #     return Response(content)
 
     @action(methods=['POST'], detail=False)
     def get_UserView(self, request):
@@ -454,8 +456,6 @@ class Kiosk(ModelViewSet):
                 data['bc_count'] = bc_count
                 data['fc_count'] = fc_count
                 # bc_camera_list = []
-                
-
 
                 datalist.append(data)
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Model',
@@ -590,12 +590,22 @@ class Kiosk(ModelViewSet):
             for a, b in temp.items():
                 pie_chart_count.append(b)
                 pie_chart_lable.append(a)
+            if len(chart_count_list) > 0:
+                best = max(chart_count_list)
+                avg = sum(chart_count_list) / len(chart_count_list)
+                this_week = sum(chart_count_list)
+            else:
+                best =None
+                avg = None
+                this_week = None
 
             data = {'Brand_count': brand_view_ogject, 'Device_count': device_view_obj, 'Model_count': model_view_obj,
                     'DeviceDTL_count': devicedtl_view_obj, 'Count_list': chart_count_list,
                     'Label_list': chart_label_list,
-                    'Model_list': chart_model_list, 'best': max(chart_count_list),
-                    'avg': (sum(chart_count_list) / len(chart_count_list)), 'this_week': sum(chart_count_list),
+                    'Model_list': chart_model_list,
+                    'best':  best,
+                    'avg': avg,
+                    'this_week':  this_week,
                     'pie_label_list': pie_chart_lable, 'pie_count_list': pie_chart_count}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of dashbord',
                        'data': data}
@@ -750,4 +760,3 @@ class Kiosk(ModelViewSet):
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
         return Response(content)
-
