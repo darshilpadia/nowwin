@@ -8,6 +8,9 @@ from .serializers import *
 from .models import *
 from collections import Counter
 from datetime import datetime
+from io import StringIO
+import xlwt
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -463,7 +466,6 @@ class Kiosk(ModelViewSet):
                 data['bc_camera_list'] = bc_camera_list
                 data['fc_camera_list'] = fc_camera_list
 
-
                 datalist.append(data)
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of Model',
                        'data': datalist}
@@ -602,7 +604,7 @@ class Kiosk(ModelViewSet):
                 avg = sum(chart_count_list) / len(chart_count_list)
                 this_week = sum(chart_count_list)
             else:
-                best =None
+                best = None
                 avg = None
                 this_week = None
 
@@ -610,9 +612,9 @@ class Kiosk(ModelViewSet):
                     'DeviceDTL_count': devicedtl_view_obj, 'Count_list': chart_count_list,
                     'Label_list': chart_label_list,
                     'Model_list': chart_model_list,
-                    'best':  best,
+                    'best': best,
                     'avg': avg,
-                    'this_week':  this_week,
+                    'this_week': this_week,
                     'pie_label_list': pie_chart_lable, 'pie_count_list': pie_chart_count}
             content = {'result': 'Success', 'status': status.HTTP_200_OK, 'message': 'Detail Of dashbord',
                        'data': data}
@@ -767,3 +769,57 @@ class Kiosk(ModelViewSet):
             content = {'result': 'Fail', 'status': status.HTTP_500_INTERNAL_SERVER_ERROR,
                        'message': 'Error in fetching data'}
         return Response(content)
+
+    # ADMIN SIDE
+    @action(methods=['POST'], detail=False)
+    def get_general_excel(self, request):
+        response = HttpResponse(content_type='application/ms-excel')
+
+        # decide file name
+        response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
+
+        # creating workbook
+        wb = xlwt.Workbook(encoding='utf-8')
+
+        # adding sheet
+        ws = wb.add_sheet("sheet1")
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        # headers are bold
+        font_style.font.bold = True
+
+        # column header names, you can use your own headers here
+        columns = ['Brand Name', 'Model Name', 'Date', 'Total Visitors', 'Back Camera Click', 'Front Camera Click',
+                   'Ram Click',
+                   'Storage Click', 'Screen Size Click', 'Other Click']
+
+        # write column headers in sheet
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        # Sheet body, remaining rows
+        font_style = xlwt.XFStyle()
+
+        # ws.write(row_num + 1, 0, 'vishal', font_style)
+        # get your data, from database or from a text file...
+        data = SPM0dels.get_general_report()
+        print(data)
+        for x in data:
+            row_num = row_num + 1
+            ws.write(row_num, 0, x[3], font_style)
+            ws.write(row_num, 1, x[2], font_style)
+            ws.write(row_num, 2, x[1], font_style)
+            ws.write(row_num, 3, x[0], font_style)
+            ws.write(row_num, 4, x[4], font_style)
+            ws.write(row_num, 5, x[8], font_style)
+            ws.write(row_num, 6, x[5], font_style)
+            ws.write(row_num, 7, x[6], font_style)
+            ws.write(row_num, 8, x[9], font_style)
+            ws.write(row_num, 9, x[7], font_style)
+
+
+        wb.save(response)
+        return response

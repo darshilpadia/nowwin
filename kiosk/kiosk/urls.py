@@ -42,6 +42,8 @@ urlpatterns = [
     url(r'^modelview$', modelview, name='modelview'),
     url(r'^deviceview$', deviceview, name='deviceview'),
     url(r'^dashboard$', dashboard, name='dashboard'),
+    url(r'^reports$', reportview, name='reports'),
+    url(r'^generalreport$', generalreport, name='generalreport'),
 # url(r'^userview$', userview, name='userview'),
 
 

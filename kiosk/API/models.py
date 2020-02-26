@@ -14,6 +14,14 @@ class SPM0dels():
         cur.close()
         return result
 
+    @staticmethod
+    def get_general_report():
+        cur = connection.cursor()
+        cur.callproc('get_general_report')
+        result = cur.fetchall()
+        cur.close()
+        return result
+
 
 class BrandMaster(models.Model):
     BrandID = models.AutoField(primary_key=True)

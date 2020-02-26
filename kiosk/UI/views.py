@@ -282,6 +282,14 @@ def dashboard(request):
         return render(request, 'dashboard.html', {'d_d': d_d.data.get('data')})
 
 
+def reportview(request):
+    return render(request, 'reports.html')
+
+def generalreport(request):
+    r = Kiosk()
+    res = r.get_general_excel(request)
+    return res
+
 def forgotpassword(request):
     print('------', request.POST)
     print('------', request)
